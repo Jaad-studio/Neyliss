@@ -52,7 +52,7 @@
         }
         .curtain {
             position: absolute; left: 0; width: 100%; height: 51%; background: var(--color-jungle); z-index: 10;
-            transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1); /* Plus rapide */
+            transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
         }
         .curtain.top { top: 0; border-bottom: 2px solid var(--color-gold); }
         .curtain.bottom { bottom: 0; border-top: 2px solid var(--color-gold); }
@@ -187,15 +187,18 @@
         .card-back ul li::before { content: '✦'; color: var(--color-gold); font-size: 1rem; }
         .reserve-mini-btn { margin-top: auto; align-self: center; padding: 14px 35px; background: var(--color-gold); color: #000; border: none; border-radius: 50px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-        /* --- DIAGNOSTIC VIRTUEL (CONSEIL) --- */
+        /* --- DIAGNOSTIC VIRTUEL (IA) --- */
         #diagnostic { padding: 100px 5%; background: rgba(0,0,0,0.2); }
         .quiz-card { max-width: 850px; margin: 0 auto; background: var(--glass); border: 1px solid var(--color-gold); border-radius: 40px; padding: clamp(30px, 8vw, 60px); text-align: center; backdrop-filter: blur(30px); box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
         .quiz-step { display: none; animation: fadeIn 0.6s ease-out; }
         .quiz-step.active { display: block; }
-        .quiz-options { display: grid; gap: 15px; margin-top: 30px; }
-        .quiz-opt { padding: 20px; background: rgba(255,255,255,0.03); border: 1.5px solid rgba(212,175,55,0.2); border-radius: 15px; cursor: pointer; transition: 0.4s; font-size: 1rem; color: #ddd; }
-        .quiz-opt:hover { background: rgba(212,175,55,0.15); border-color: var(--color-gold); color: #fff; transform: translateX(10px); }
         .result-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), transparent); border: 2px solid var(--color-gold); padding: 30px; border-radius: 25px; margin-top: 25px; }
+        .btn-next:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+        /* --- AI FEATURES --- */
+        .ai-textarea { width: 100%; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; color: #fff; font-family: var(--font-body); font-size: 1rem; resize: vertical; transition: 0.3s; box-shadow: inset 0 5px 15px rgba(0,0,0,0.5); }
+        .ai-textarea:focus { border-color: var(--color-gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(212,175,55,0.2), inset 0 5px 15px rgba(0,0,0,0.5); }
+        .ai-error { color: #ff6b6b; font-size: 0.9rem; margin-top: 15px; display: none; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 10px; }
 
         /* --- VIDEO GALLERY --- */
         #gallery { padding: 80px 0; }
@@ -217,7 +220,7 @@
         /* --- FAQ --- */
         #faq { padding: 100px 5%; }
         .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-item { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 15px; margin-bottom: 12px; overflow: hidden; transition: 0.3s; backdrop-filter: blur(10px); }
+        .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; margin-bottom: 12px; overflow: hidden; transition: 0.3s; backdrop-filter: blur(10px); }
         .faq-question { padding: 22px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1rem; color: #eee; }
         .faq-answer { padding: 0 22px; max-height: 0; overflow: hidden; transition: 0.4s ease; color: #aaa; line-height: 1.6; font-size: 0.9rem; }
         .faq-item.active .faq-answer { padding: 0 22px 22px; max-height: 350px; }
@@ -249,16 +252,11 @@
         .btn-next { padding: 14px 40px; background: var(--color-gold); border: none; border-radius: 50px; color: #000; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 0.9rem; }
         .btn-next:disabled { background: #333; color: #666; cursor: not-allowed; }
 
-        /* --- AI FEATURES --- */
-        .ai-textarea { width: 100%; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; color: #fff; font-family: var(--font-body); font-size: 1rem; resize: vertical; transition: 0.3s; box-shadow: inset 0 5px 15px rgba(0,0,0,0.5); }
-        .ai-textarea:focus { border-color: var(--color-gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(212,175,55,0.2), inset 0 5px 15px rgba(0,0,0,0.5); }
-        .ai-error { color: #ff6b6b; font-size: 0.9rem; margin-top: 15px; display: none; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 10px; }
-
         /* --- FOOTER --- */
         footer { padding: 100px 5% 60px; text-align: center; border-top: 1px solid var(--color-gold); background: linear-gradient(to bottom, #0d4230, #021a12); position: relative; overflow: hidden; }
         .footer-logo { font-family: var(--font-title); font-size: 2.3rem; color: var(--color-gold); margin-bottom: 30px; display: block; letter-spacing: 5px; font-weight: 700; }
         .socials { display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; }
-        .social-link { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--color-gold); transition: 0.4s; backdrop-filter: blur(5px); }
+        .social-link { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--color-gold); transition: 0.4s; backdrop-filter: blur(5px); }
         .social-link:hover { background: var(--color-gold); color: #000; transform: translateY(-10px); }
 
         @media (max-width: 900px) {
@@ -622,40 +620,22 @@
     </footer>
 
     <script>
-        // GEMINI API CONFIGURATION
-        const apiKey = "AIzaSyA-vCHKmj_w_gJK2X5XBlT0K9KpUqxdDB0"; // Fourni par l'environnement
-        
-        async function fetchGeminiWithRetry(prompt, systemInstruction, responseSchema = null, retries = 5) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            if (responseSchema) {
-                payload.generationConfig = {
-                    responseMimeType: "application/json",
-                    responseSchema: responseSchema
-                };
-            }
-
-            let delay = 1000;
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
-                    const data = await response.json();
-                    return data.candidates[0].content.parts[0].text;
-                } catch (error) {
-                    if (i === retries - 1) throw error;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2;
-                }
+        // APPEL AU SERVEUR (BACKEND VERCEL)
+        async function fetchGeminiViaBackend(prompt, systemInstruction, responseSchema = null) {
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt, systemInstruction, responseSchema })
+                });
+                
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || "Erreur lors de l'appel à l'IA");
+                
+                return data.text;
+            } catch (error) {
+                console.error("Erreur API Backend:", error);
+                throw error;
             }
         }
 
@@ -782,7 +762,7 @@ Analyse la description du client. Choisis LA prestation idéale de cette liste. 
             };
 
             try {
-                const responseText = await fetchGeminiWithRetry(inputDesc, systemInstruction, schema);
+                const responseText = await fetchGeminiViaBackend(inputDesc, systemInstruction, schema);
                 const result = JSON.parse(responseText);
                 
                 document.getElementById('res-name').innerText = result.serviceName;
@@ -830,7 +810,7 @@ Réponds à la question de l'utilisateur avec expertise, de manière concise (2-
 Si la question n'est pas liée à la coiffure, aux cheveux ou au salon, recadre poliment en expliquant ton domaine d'expertise.`;
 
             try {
-                const answer = await fetchGeminiWithRetry(question, systemInstruction);
+                const answer = await fetchGeminiViaBackend(question, systemInstruction);
                 answerEl.innerHTML = `<strong>L'Expert NEY LISS :</strong><br><br>${answer}`;
                 answerEl.style.display = 'block';
             } catch (error) {
