@@ -1,10 +1,10 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // N'accepte que les requêtes POST depuis votre site
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Méthode non autorisée' });
     }
 
-    // Récupère la clé secrète depuis Vercel (invisible pour les visiteurs)
+    // Récupère la clé secrète depuis Vercel
     const apiKey = process.env.GEMINI_API_KEY;
     
     if (!apiKey) {
