@@ -6,6 +6,9 @@
     <title>NEY LISS | Lissage au Tanin & Soins Haut de Gamme</title>
     <meta name="description" content="Expertise lissage au tanin, Nano Indien et soins capillaires de luxe à Romans-sur-Isère.">
     
+    <!-- Favicon -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
     <!-- Meta Social -->
     <meta property="og:title" content="NEY LISS - Lissage au Tanin d'Exception">
     <meta property="og:description" content="Découvrez nos soins haut de gamme : Tanin, Nano Indien, Botox. Réservez votre instant beauté.">
@@ -100,24 +103,24 @@
         body.loaded #preloader .loader-content { opacity: 0; transition: 0.3s; visibility: hidden; }
 
         /* --- EFFET DE SURVEILLANCE DORÉE (SHIMMER) --- */
-        .btn-nav, .reserve-mini-btn, .social-link {
+        .reserve-mini-btn, .social-link {
             position: relative;
             overflow: hidden;
         }
 
-        .btn-nav::after, .reserve-mini-btn::after, .social-link::after {
+        .reserve-mini-btn::after, .social-link::after {
             content: "";
             position: absolute;
             top: 0;
             left: -150%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
             transform: skewX(-25deg);
             transition: 0s;
         }
 
-        .btn-nav:hover::after, .reserve-mini-btn:hover::after, .social-link:hover::after {
+        .reserve-mini-btn:hover::after, .social-link:hover::after {
             left: 150%;
             transition: 0.6s ease-in-out;
         }
@@ -157,7 +160,8 @@
         .logo { font-family: var(--font-title); font-size: 1.4rem; font-weight: 700; color: var(--color-gold); letter-spacing: 3px; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; color: rgba(255,255,255,0.8); }
-        .btn-nav { padding: 10px 22px; border: 1px solid var(--color-gold); border-radius: 50px; color: var(--color-gold) !important; font-weight: 600; background: rgba(212, 175, 55, 0.05); }
+        .btn-nav { padding: 10px 22px; border: 1px solid var(--color-gold); border-radius: 50px; color: var(--color-gold) !important; font-weight: 600; background: rgba(212, 175, 55, 0.05); transition: all 0.3s ease; }
+        .btn-nav:hover { background: var(--color-gold); color: #000 !important; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); transform: translateY(-2px); }
         .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 4000; width: 28px; }
         .hamburger span { width: 100%; height: 2px; background: var(--color-gold); transition: 0.4s; }
 
@@ -478,23 +482,28 @@
         <div class="reviews-grid">
             <div class="review-card">
                 <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="review-text">"Mes cheveux n'ont jamais été aussi brillants. Le lissage au tanin a sauvé mes longueurs. Un travail d'orfèvre !"</p>
-                <p class="client-name">- SARAH M.</p>
+                <p class="review-text">"Oui nickel le lissage au top, merci au séchage ils sont tous lisses."</p>
+                <p class="client-name" style="margin-top: 15px; font-weight: bold; color: var(--color-gold);">- Nano Indien</p>
             </div>
             <div class="review-card">
                 <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="review-text">"Le Botox Gloss lissant a totalement discipliné mes frisottis. L'effet miroir est incroyable. Je recommande."</p>
-                <p class="client-name">- EMMA R.</p>
+                <p class="review-text">"Un coup de sèche-cheveux et le lissage revient instantanément ! Ce matin j'ai passé le lisseur pour bien les plaquer ça m'a pris 3 min au lieu de 15 d'habitude ! 😂 Ils ont gardé leur douceur c'est incroyable."</p>
+                <p class="client-name" style="margin-top: 15px; font-weight: bold; color: var(--color-gold);">- Lissage au Tanin</p>
             </div>
             <div class="review-card">
                 <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="review-text">"Soin incroyable, mes cheveux revivent ! L'effet Tanin est bluffant sur mes boucles rebelles."</p>
-                <p class="client-name">- LÉA V.</p>
+                <p class="review-text">"Mes cheveux sont incroyablement doux et brillants depuis. Je les trouve plus souples et énormément moins abîmés à cause des plaques. Je reprends petit à petit la forme de mes boucles. Merci beaucoup 🫶🏽😁"</p>
+                <p class="client-name" style="margin-top: 15px; font-weight: bold; color: var(--color-gold);">- Soin Botox Patine</p>
             </div>
             <div class="review-card">
                 <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <p class="review-text">"Prestation de luxe, accueil chaleureux. Le forfait racines est parfait pour l'entretien."</p>
-                <p class="client-name">- CHLOÉ B.</p>
+                <p class="review-text">"Après avoir fait un shampoing, un coup de sèche-cheveux et ils sont tjrs aussi lisses, parfait merci encore c'est 10 fois mieux et beaucoup plus simple !😘"</p>
+                <p class="client-name" style="margin-top: 15px; font-weight: bold; color: var(--color-gold);">- Lissage au Tanin</p>
+            </div>
+            <div class="review-card">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="review-text">"Je t'écris pour te faire un retour suite au soin botox Nigella, mes cheveux sont super brillants et doux, je suis trop contente je pense te recontacter pour en faire encore, mes cheveux revivent ! 😍"</p>
+                <p class="client-name" style="margin-top: 15px; font-weight: bold; color: var(--color-gold);">- Soin Botox Nigella</p>
             </div>
         </div>
     </section>
