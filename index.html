@@ -249,6 +249,11 @@
         .btn-next { padding: 14px 40px; background: var(--color-gold); border: none; border-radius: 50px; color: #000; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 0.9rem; }
         .btn-next:disabled { background: #333; color: #666; cursor: not-allowed; }
 
+        /* --- AI FEATURES --- */
+        .ai-textarea { width: 100%; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.4); border-radius: 20px; color: #fff; font-family: var(--font-body); font-size: 1rem; resize: vertical; transition: 0.3s; box-shadow: inset 0 5px 15px rgba(0,0,0,0.5); }
+        .ai-textarea:focus { border-color: var(--color-gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(212,175,55,0.2), inset 0 5px 15px rgba(0,0,0,0.5); }
+        .ai-error { color: #ff6b6b; font-size: 0.9rem; margin-top: 15px; display: none; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 10px; }
+
         /* --- FOOTER --- */
         footer { padding: 100px 5% 60px; text-align: center; border-top: 1px solid var(--color-gold); background: linear-gradient(to bottom, #0d4230, #021a12); position: relative; overflow: hidden; }
         .footer-logo { font-family: var(--font-title); font-size: 2.3rem; color: var(--color-gold); margin-bottom: 30px; display: block; letter-spacing: 5px; font-weight: 700; }
@@ -416,50 +421,36 @@
         </div>
     </section>
 
-    <!-- DIAGNOSTIC VIRTUEL (RÉINSTALLÉ) -->
+    <!-- DIAGNOSTIC VIRTUEL (IA) -->
     <section id="diagnostic" class="reveal">
         <div class="section-header">
-            <h2 class="section-title">Diagnostic Virtuel</h2>
+            <h2 class="section-title">Diagnostic IA ✨</h2>
             <div class="title-divider"></div>
         </div>
         <div class="quiz-card">
-            <div class="quiz-step active" id="q-intro">
-                <i class="fas fa-magic" style="font-size: 3.5rem; color: var(--color-gold); margin-bottom: 25px;"></i>
-                <h2 style="font-family: var(--font-title); font-size: 2.2rem; margin-bottom: 15px;">Conseil Expert</h2>
-                <p style="color: #aaa; margin-bottom: 40px;">Répondez à 3 questions pour recevoir notre recommandation personnalisée.</p>
-                <button class="cta-button" onclick="nextQ('step1')">Commencer le diagnostic</button>
-            </div>
-            <div class="quiz-step" id="q-step1">
-                <h3 style="margin-bottom:30px;">Quelle est la nature de vos cheveux ?</h3>
-                <div class="quiz-options">
-                    <div class="quiz-opt" onclick="setQ('t','fins'); nextQ('step2')">Fins, fragiles ou sensibilisés</div>
-                    <div class="quiz-opt" onclick="setQ('t','epais'); nextQ('step2')">Épais, très bouclés ou crépus</div>
-                    <div class="quiz-opt" onclick="setQ('t','ternes'); nextQ('step2')">Normaux mais en manque d'éclat</div>
+            <div class="quiz-step active" id="ai-input-step">
+                <i class="fas fa-magic" style="font-size: 3.5rem; color: var(--color-gold); margin-bottom: 25px; animation: pulseGlow 2s infinite;"></i>
+                <h2 style="font-family: var(--font-title); font-size: 2.2rem; margin-bottom: 15px;">L'Expertise Sur-Mesure</h2>
+                <p style="color: #aaa; margin-bottom: 30px; font-size: 0.95rem; line-height: 1.6;">Décrivez la nature de vos cheveux, vos problématiques (frisottis, casse, volume) et le résultat de vos rêves. Notre intelligence artificielle, infusée du savoir-faire NEY LISS, analysera vos besoins pour trouver le soin parfait.</p>
+                <textarea id="ai-hair-desc" class="ai-textarea" rows="5" placeholder="Ex: J'ai les cheveux très fins, décolorés il y a 6 mois. Ils sont mousseux avec l'humidité. Je voudrais les lisser et les soigner sans perdre mon volume naturel..."></textarea>
+                <div id="ai-error-msg" class="ai-error">Une erreur est survenue lors de l'analyse. Veuillez réessayer.</div>
+                
+                <button class="cta-button" id="btn-run-ai" onclick="runAiDiagnostic()" style="width: 100%; max-width: 400px; display: block; margin: 30px auto 0;">✨ Analyser ma chevelure</button>
+                
+                <div id="ai-loader" class="ai-loader" style="display: none; margin-top: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--color-gold); font-size: 2.5rem; margin-bottom: 15px;"></i>
+                    <p style="color: var(--color-gold); font-style: italic; letter-spacing: 2px;">Consultation virtuelle en cours...</p>
                 </div>
             </div>
-            <div class="quiz-step" id="q-step2">
-                <h3 style="margin-bottom:30px;">Quel résultat rêvez-vous d'obtenir ?</h3>
-                <div class="quiz-options">
-                    <div class="quiz-opt" onclick="setQ('g','lisse'); nextQ('step3')">Un lissage baguette durable (100%)</div>
-                    <div class="quiz-opt" onclick="setQ('g','soin'); nextQ('step3')">Réparer, nourrir et faire briller</div>
-                    <div class="quiz-opt" onclick="setQ('g','fete'); nextQ('step3')">Un fini soyeux pour quelques jours</div>
-                </div>
-            </div>
-            <div class="quiz-step" id="q-step3">
-                <h3 style="margin-bottom:30px;">Dernière étape...</h3>
-                <div class="quiz-options">
-                    <div class="quiz-opt" onclick="setQ('s','oui'); showRes()">J'ai déjà fait un lissage chez Ney Liss</div>
-                    <div class="quiz-opt" onclick="setQ('s','non'); showRes()">C'est ma toute première visite</div>
-                </div>
-            </div>
-            <div class="quiz-step" id="q-res">
+            
+            <div class="quiz-step" id="ai-res-step">
                 <div class="result-box">
-                    <p style="text-transform: uppercase; letter-spacing: 3px; color: #888; font-size: 0.8rem; margin-bottom: 10px;">La recommandation de l'expert</p>
+                    <p style="text-transform: uppercase; letter-spacing: 3px; color: #888; font-size: 0.8rem; margin-bottom: 10px;">La recommandation de l'expert IA ✨</p>
                     <h3 id="res-name" style="font-size: 2.2rem; font-family: var(--font-title); color: var(--color-gold); margin: 15px 0;">...</h3>
-                    <p id="res-desc" style="color: #bbb; line-height: 1.7; margin-bottom: 30px; font-size: 0.95rem;"></p>
-                    <button class="reserve-mini-btn" id="res-btn" style="font-size: 1rem; padding: 16px 45px;">Réserver ce soin</button>
+                    <p id="res-desc" style="color: #bbb; line-height: 1.7; margin-bottom: 30px; font-size: 0.95rem; text-align: justify;"></p>
+                    <button class="reserve-mini-btn" id="res-btn" style="font-size: 1rem; padding: 16px 45px; width: 100%;">Réserver ce soin</button>
                 </div>
-                <button class="btn-back" style="margin-top: 35px;" onclick="resetQuiz()">Recommencer</button>
+                <button class="btn-back" style="margin-top: 35px; background: transparent; color: #888; border: 1px solid #444; padding: 10px 30px; border-radius: 50px; cursor: pointer;" onclick="resetAiDiagnostic()">Nouvelle consultation</button>
             </div>
         </div>
     </section>
@@ -542,6 +533,18 @@
                 <div class="faq-answer">Il est impératif d'utiliser un shampoing sans sulfates (SLS) pour préserver les effets du soin sur le long terme.</div>
             </div>
         </div>
+
+        <!-- AI FAQ Section -->
+        <div class="ai-faq-container" style="max-width: 800px; margin: 50px auto 0; background: rgba(255,255,255,0.02); border: 1px dashed rgba(212,175,55,0.5); border-radius: 20px; padding: clamp(20px, 5vw, 40px); text-align: center; backdrop-filter: blur(10px);">
+            <h3 style="color: var(--color-gold); margin-bottom: 15px; font-family: var(--font-title); font-size: 1.5rem;">Une question spécifique ? ✨</h3>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 25px;">Posez votre question à notre assistant virtuel, entraîné par nos experts visagistes.</p>
+            <div style="display: flex; gap: 10px; justify-content: center; align-items: stretch; flex-wrap: wrap;">
+                <input type="text" id="ai-faq-input" placeholder="Ex: Le botox va-t-il lisser mes boucles naturelles ?" style="flex: 1; min-width: 250px; padding: 15px 20px; background: rgba(0,0,0,0.5); border: 1px solid #444; border-radius: 50px; color: #fff; font-family: var(--font-body); outline: none;">
+                <button onclick="askAiFaq()" id="ai-faq-btn" class="reserve-mini-btn" style="margin: 0;">Demander</button>
+            </div>
+            <div id="ai-faq-loader" style="display: none; margin-top: 20px; color: var(--color-gold);"><i class="fas fa-circle-notch fa-spin"></i> Recherche de la réponse...</div>
+            <div id="ai-faq-answer" style="display: none; margin-top: 25px; padding: 25px; background: linear-gradient(90deg, rgba(212,175,55,0.1), transparent); border-left: 3px solid var(--color-gold); text-align: left; color: #ddd; font-size: 0.95rem; border-radius: 0 15px 15px 0; line-height: 1.6;"></div>
+        </div>
     </section>
 
     <!-- BOOKING SYSTEM -->
@@ -619,6 +622,43 @@
     </footer>
 
     <script>
+        // GEMINI API CONFIGURATION
+        const apiKey = "AIzaSyC2758bso-2q557iM0bkkVS3RA7QiD74Y0"; // Fourni par l'environnement
+        
+        async function fetchGeminiWithRetry(prompt, systemInstruction, responseSchema = null, retries = 5) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            if (responseSchema) {
+                payload.generationConfig = {
+                    responseMimeType: "application/json",
+                    responseSchema: responseSchema
+                };
+            }
+
+            let delay = 1000;
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    const data = await response.json();
+                    return data.candidates[0].content.parts[0].text;
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
         // HEADER EFFECT
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');
@@ -698,19 +738,114 @@
         function preselect(n) { scrollToBooking(); document.querySelectorAll('.srv-item').forEach(o => { if(o.innerText.includes(n) || (o.innerText.includes("Botox Gloss") && n.includes("Botox Gloss"))) selBookingS(o, n); }); currS_B = 1; showS_B(1); }
         function toggleFaq(el) { el.classList.toggle('active'); }
 
-        // LOGIQUE QUIZ (RÉINSTALLÉ)
-        let qA = {t:'', g:'', s:''};
-        function nextQ(id) { document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active')); document.getElementById('q-'+id).classList.add('active'); }
-        function setQ(k, v) { qA[k]=v; }
-        function showRes() {
-            let r = "Botox Gloss (Lissant)", d = "Le soin éclat miroir par excellence pour une brillance absolue.";
-            if(qA.s==='oui') { r="Forfait Racines"; d="Parfait pour entretenir vos racines sans toucher à vos longueurs."; }
-            else if(qA.t==='epais' && qA.g==='lisse') { r="Nano Indien"; d="Le lissage le plus puissant pour transformer vos cheveux rebelles en soie."; }
-            else if(qA.t==='fins') { r="Lissage California"; d="Un lissage tout en douceur qui répare et respecte la finesse de vos cheveux."; }
-            document.getElementById('res-name').innerText = r; document.getElementById('res-desc').innerText = d;
-            document.getElementById('res-btn').onclick = () => preselect(r); nextQ('res');
+        // LOGIQUE DIAGNOSTIC IA ✨
+        async function runAiDiagnostic() {
+            const inputDesc = document.getElementById('ai-hair-desc').value.trim();
+            const btn = document.getElementById('btn-run-ai');
+            const loader = document.getElementById('ai-loader');
+            const errorMsg = document.getElementById('ai-error-msg');
+            
+            if (!inputDesc) {
+                errorMsg.innerText = "Veuillez décrire vos cheveux avant de lancer l'analyse.";
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+            btn.style.display = 'none';
+            loader.style.display = 'block';
+
+            const systemInstruction = `Tu es l'Expert Capillaire virtuel de 'NEY LISS', un salon de coiffure de luxe spécialisé. 
+Ton rôle est de recommander la meilleure prestation parmi cette liste stricte :
+1. "Lissage California" (cheveux fins/sensibilisés, vegan, doux)
+2. "Nano Indien" (très frisés, crépus, résistants, 100% lisse)
+3. "Botox Gloss (Lissant)" (réduit volume, anti-frisottis, brillance miroir)
+4. "Botox Non Lissant" (soin profond, nutrition, garde les boucles/volume)
+5. "Silk Press" (lissage temporaire sans chimie)
+6. "Forfait Racines" (entretien repousses)
+
+Analyse la description du client. Choisis LA prestation idéale de cette liste. Ton explication doit être luxueuse, rassurante et personnalisée en s'adressant directement au client avec bienveillance. (3-4 phrases max).`;
+
+            const schema = {
+                type: "OBJECT",
+                properties: {
+                    serviceName: { 
+                        type: "STRING", 
+                        description: "Nom EXACT de la prestation recommandée. Doit être strictement égal à: Lissage California, Nano Indien, Botox Gloss (Lissant), Botox Non Lissant, Silk Press, ou Forfait Racines." 
+                    },
+                    explanation: { 
+                        type: "STRING", 
+                        description: "L'explication luxueuse et personnalisée pour le client." 
+                    }
+                },
+                required: ["serviceName", "explanation"]
+            };
+
+            try {
+                const responseText = await fetchGeminiWithRetry(inputDesc, systemInstruction, schema);
+                const result = JSON.parse(responseText);
+                
+                document.getElementById('res-name').innerText = result.serviceName;
+                document.getElementById('res-desc').innerText = result.explanation;
+                
+                // Lie le bouton de réservation de la réponse IA au système de réservation
+                document.getElementById('res-btn').onclick = () => preselect(result.serviceName);
+                
+                // Bascule d'affichage
+                document.getElementById('ai-input-step').classList.remove('active');
+                document.getElementById('ai-res-step').classList.add('active');
+            } catch (error) {
+                console.error("Erreur Gemini API:", error);
+                errorMsg.innerText = "Notre expert virtuel est momentanément indisponible. Veuillez réessayer ou consulter nos prestations directement.";
+                errorMsg.style.display = 'block';
+                btn.style.display = 'block';
+            } finally {
+                loader.style.display = 'none';
+            }
         }
-        function resetQuiz() { nextQ('intro'); }
+
+        function resetAiDiagnostic() {
+            document.getElementById('ai-hair-desc').value = "";
+            document.getElementById('ai-res-step').classList.remove('active');
+            document.getElementById('ai-input-step').classList.add('active');
+            document.getElementById('btn-run-ai').style.display = 'block';
+        }
+
+        // LOGIQUE ASSISTANT FAQ IA ✨
+        async function askAiFaq() {
+            const inputEl = document.getElementById('ai-faq-input');
+            const loader = document.getElementById('ai-faq-loader');
+            const answerEl = document.getElementById('ai-faq-answer');
+            const btn = document.getElementById('ai-faq-btn');
+            
+            const question = inputEl.value.trim();
+            if(!question) return;
+
+            btn.disabled = true;
+            answerEl.style.display = 'none';
+            loader.style.display = 'block';
+
+            const systemInstruction = `Tu es l'assistant virtuel de 'NEY LISS', un salon haut de gamme expert en lissage au tanin, lissage indien, botox capillaire et soins profonds.
+Réponds à la question de l'utilisateur avec expertise, de manière concise (2-3 phrases maximum), et avec un ton luxueux, professionnel et bienveillant. 
+Si la question n'est pas liée à la coiffure, aux cheveux ou au salon, recadre poliment en expliquant ton domaine d'expertise.`;
+
+            try {
+                const answer = await fetchGeminiWithRetry(question, systemInstruction);
+                answerEl.innerHTML = `<strong>L'Expert NEY LISS :</strong><br><br>${answer}`;
+                answerEl.style.display = 'block';
+            } catch (error) {
+                answerEl.innerHTML = "<em>Désolé, notre assistant est actuellement très sollicité. Veuillez réessayer dans quelques instants.</em>";
+                answerEl.style.display = 'block';
+            } finally {
+                loader.style.display = 'none';
+                btn.disabled = false;
+            }
+        }
+
+        // Permettre l'envoi de la FAQ avec la touche Entrée
+        document.getElementById('ai-faq-input')?.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') askAiFaq();
+        });
 
         // LOGIQUE RÉSERVATION
         let currS_B = 1, bData = {s:null, d:null, t:null}, cY = 2026, cM = 4;
