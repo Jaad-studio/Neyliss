@@ -954,8 +954,11 @@
             document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // ── LOAD ─────────────────────────────────────────────────
-        window.addEventListener('load', () => {
+        // ── LOAD (préloader plus rapide + sécurisé mobile) ──────────────────────
+        let preloaderDone = false;
+        function finishPreloader() {
+            if (preloaderDone) return;
+            preloaderDone = true;
             generateParticles();
             setTimeout(() => {
                 document.body.classList.add('loaded');
@@ -963,16 +966,24 @@
                 setTimeout(() => {
                     const p = document.getElementById('preloader');
                     if (p) p.style.display = 'none';
-                }, 600);
-            }, 800); // Préloader rapide : 800ms
+                }, 300);
+            }, 250);
+        }
+        window.addEventListener('load', finishPreloader);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sur certains mobiles, l'évènement load peut être très tardif
+            setTimeout(finishPreloader, 600);
         });
+        // Filet de sécurité : on force la fin du préloader même si rien ne se déclenche
+        setTimeout(finishPreloader, 4000);
 
         // ── PARTICLES PRELOADER ───────────────────────────────────
         function generateParticles() {
             const loader = document.getElementById('preloader');
             if (!loader) return;
             const icons = ['🌿', '🌺', '🌴', '✨', '🦜'];
-            for (let i = 0; i < 30; i++) {
+            // Moins de particules + cadence plus courte pour alléger le rendu
+            for (let i = 0; i < 16; i++) {
                 setTimeout(() => {
                     const p = document.createElement('div');
                     p.className = 'particle';
@@ -984,10 +995,10 @@
                     --sy:${Math.sin(angle) * dist}px;
                     left:50%;top:50%;
                     font-size:${Math.random() * 14 + 8}px;
-                    animation-delay:${Math.random() * 0.4}s;
+                    animation-delay:${Math.random() * 0.25}s;
                 `;
                     loader.appendChild(p);
-                }, i * 15);
+                }, i * 10);
             }
         }
 

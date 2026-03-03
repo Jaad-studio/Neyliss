@@ -62,13 +62,19 @@ body {
     color: var(--off-white);
     overflow-x: hidden;
     background: var(--forest-abyss);
-    /* Texture forêt : plusieurs couches de radial-gradient */
     background-image:
         radial-gradient(ellipse 120% 60% at 20% 0%, rgba(14, 127, 168, .07) 0%, transparent 55%),
         radial-gradient(ellipse 80% 80% at 80% 30%, rgba(37, 148, 63, .06) 0%, transparent 60%),
         radial-gradient(ellipse 60% 100% at 10% 80%, rgba(10, 173, 168, .05) 0%, transparent 50%),
         linear-gradient(180deg, #020D07 0%, #061408 40%, #020D07 100%);
     background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+    body {
+        /* Sur mobile, évite background-attachment: fixed qui peut bloquer / saccader le scroll */
+        background-attachment: scroll;
+    }
 }
 
 /* ── KEYFRAMES ──────────────────────────────────────────── */
