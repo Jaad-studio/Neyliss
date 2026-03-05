@@ -234,24 +234,25 @@
         .hamburger.open span:nth-child(2) { opacity: 0 }
         .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg) }
 
-        /* ── HERO & SPLINE ──────────────────────────────────────── */
+        /* ── HERO & BACKGROUND ──────────────────────────────────────── */
         #hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 20px; position: relative; overflow: hidden; }
         
-        /* Modification pour l'iframe Spline */
-        .spline-bg { 
+        /* Image de fond en remplacement de Spline */
+        .hero-bg { 
             position: absolute; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
+            object-fit: cover;
             z-index: 0; 
             border: none;
-            pointer-events: none; /* Désactive les interactions pour ne pas bloquer le scroll de la page */
-            filter: contrast(1.15) brightness(0.85); /* Intègre mieux la 3D dans le fond sombre */
+            pointer-events: none; 
+            filter: contrast(1.1) brightness(0.65); /* Intègre l'image dans le fond sombre */
         }
         
-        /* Effet immersif : ombres profondes sur les bords pour fondre la 3D dans la page */
-        .spline-vignette {
+        /* Effet immersif : ombres profondes sur les bords pour fondre l'image dans la page */
+        .hero-vignette {
             position: absolute;
             inset: 0;
             z-index: 1;
@@ -944,14 +945,13 @@
         </div>
     </header>
 
-    <!-- ═══ HERO avec SPLINE 3D ═══ -->
+    <!-- ═══ HERO ═══ -->
     <section id="hero">
-        <!-- Utilisation d'un iframe au lieu du composant web spline-viewer. 
-             C'est souvent beaucoup plus stable car l'iframe gère lui-même la bonne version du player. -->
-        <iframe class="spline-bg" src="https://my.spline.design/bambooplant-mL28LaXHemped3tJ75g55TJd/" frameborder="0"></iframe>
+        <!-- Image de fond remplaçant la 3D Spline -->
+        <img src="fond.jpg" alt="Fond tropical NEY LISS" class="hero-bg" onerror="this.src='https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop'">
         
-        <!-- Calque immersif par-dessus la 3D -->
-        <div class="spline-vignette"></div>
+        <!-- Calque immersif par-dessus l'image -->
+        <div class="hero-vignette"></div>
         
         <div class="hero-content">
             <span class="hero-eyebrow">✦ Excellence Brésilienne ✦</span>
@@ -969,7 +969,7 @@
         </div>
         <div class="signature-grid">
             <div class="signature-photo-wrap">
-                <img src="logo.jpg" alt="NEY LISS — Photo de profil" class="signature-photo">
+                <img src="logo.jpg" alt="NEY LISS — Photo de profil" class="signature-photo" onerror="this.src='https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop'">
                 <div class="signature-badge">🌺</div>
             </div>
             <div class="signature-text">
@@ -1592,6 +1592,18 @@
 
     <!-- ═══ JAVASCRIPT ═══ -->
     <script>
+        // Importer FontAwesome pour les icônes (si ce n'est pas déjà fait ailleurs)
+        const fontAwesome = document.createElement('link');
+        fontAwesome.rel = 'stylesheet';
+        fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        document.head.appendChild(fontAwesome);
+        
+        // Importer les polices Google
+        const googleFonts = document.createElement('link');
+        googleFonts.rel = 'stylesheet';
+        googleFonts.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap';
+        document.head.appendChild(googleFonts);
+
         // ── SCROLL HEADER ────────────────────────────────────────
         window.addEventListener('scroll', () => {
             document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
