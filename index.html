@@ -235,7 +235,11 @@
         .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg) }
 
         /* ── HERO & BACKGROUND ──────────────────────────────────────── */
-        #hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 20px; position: relative; overflow: hidden; }
+        #hero { 
+            height: 100vh; 
+            height: 100svh; /* Unité moderne : s'adapte parfaitement aux écrans mobiles et leurs barres de navigation */
+            display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 20px; position: relative; overflow: hidden; 
+        }
         
         /* Image de fond en remplacement de Spline */
         .hero-bg { 
@@ -244,7 +248,8 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
-            object-fit: cover;
+            object-fit: cover; /* Remplit l'écran sans écraser l'image */
+            object-position: center center; /* Force le point de focus au centre sur mobile */
             z-index: 0; 
             border: none;
             pointer-events: none; 
@@ -817,6 +822,11 @@
             .admin-panel { max-width: 95%; }
             .admin-login { padding: 35px 20px; }
             .admin-dashboard { padding: 25px 16px; }
+            
+            /* Si le sujet principal de votre image n'est pas au centre, vous pouvez ajuster le cadrage ici pour le mobile */
+            .hero-bg {
+                object-position: center; /* Remplacez 'center' par 'left', 'right', 'top' ou 'bottom' si nécessaire */
+            }
         }
 
         @media (max-width:860px) {
