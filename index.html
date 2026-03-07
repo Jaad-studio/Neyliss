@@ -17,30 +17,35 @@
 
     <style>
         :root {
-            --forest-abyss: #020D07; /* nuit en forêt */
-            --forest-deep: #061408;  /* sol de forêt */
-            --forest-dark: #0C2412;  /* sous-bois */
-            --forest-mid: #143D1E;   /* fougères */
-            --forest-vivid: #1A6030; /* feuilles vives */
-            --forest-bright: #25943F;/* lumière filtrante */
-            --moss: #3D7A2A;         /* mousse */
+            --forest-abyss: #010804; /* Very dark rich green/black for ultra premium look */
+            --forest-deep: #030f06;
+            --forest-dark: #061a0a;
+            --forest-mid: #0a2e13;
+            --forest-vivid: #0e451b;
+            --forest-bright: #176329;
+            --moss: #228f3d;
 
             /* ── Thème Brésil (Vert / Jaune) ── */
-            --br-dark: #064E3B;      /* vert jungle profond */
-            --br-green: #16A34A;     /* vert brésil vibrant */
-            --br-light: #4ADE80;     /* vert clair lumineux pour les textes/icônes */
-            --br-yellow: #FACC15;    /* jaune or brésil pour les accents */
+            --br-dark: #043628;
+            --br-green: #0ea554;
+            --br-light: #34d399; /* emerald brightness */
+            --br-yellow: #eab308; /* refined gold */
+            --br-gold: #fbbf24;
 
             /* ── Accents chauds ── */
-            --amber: #C8860A;        /* lumière dorée filtrante */
-            --amber-bright: #E8A020;
-            --off-white: #EDF5EC;    /* brume matin */
-            --text-muted: rgba(237, 245, 236, 0.62);
+            --amber: #b45309;
+            --amber-bright: #d97706;
+            --off-white: #f8fafc;
+            --text-muted: rgba(248, 250, 252, 0.55);
 
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Poppins', sans-serif;
-            --nav-h: 76px;
-            --r: 20px;
+            --nav-h: 80px;
+            --r: 24px;
+            
+            --glass-bg: rgba(6, 26, 10, 0.45);
+            --glass-border: rgba(234, 179, 8, 0.15);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
         }
 
         /* ── RESET ──────────────────────────────────────────────── */
@@ -59,8 +64,10 @@
         body {
             font-family: var(--font-body);
             color: var(--off-white);
+            background: var(--forest-abyss);
             overflow-x: hidden;
-            background: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         @media (max-width: 768px) {
@@ -78,7 +85,10 @@
         @keyframes pulseLagon { 0%, 100% { box-shadow: 0 0 30px rgba(22, 163, 74, .4) } 50% { box-shadow: 0 0 70px rgba(250, 204, 21, .6), 0 0 30px rgba(37, 148, 63, .5) } }
         @keyframes shimmer { 0% { left: -110% } 100% { left: 160% } }
         @keyframes floatLeaf { 0% { transform: translateY(-8vh) rotate(0deg); opacity: 0 } 10% { opacity: .22 } 90% { opacity: .22 } 100% { transform: translateY(110vh) translateX(80px) rotate(360deg); opacity: 0 } }
-        @keyframes floatCard { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-11px) } }
+        @keyframes floatCard { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.01); } }
+        @keyframes floatElements { 0% { transform: translate(0, 0) rotate(0deg); } 33% { transform: translate(30px, -50px) rotate(10deg); } 66% { transform: translate(-20px, 20px) rotate(-5deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+        @keyframes glowPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+        @keyframes borderFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } } 50% { transform: translateY(-11px) } }
         
         /* Explosion des confettis vers l'extérieur */
         @keyframes particleExplode { 
@@ -209,7 +219,7 @@
         section, footer { position: relative; z-index: 2; }
 
         /* ── SECTION HEADERS ────────────────────────────────────── */
-        .section-header { text-align: center; margin-bottom: 65px; padding: 0 20px }
+        .section-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-h); z-index: 3000; display: flex; align-items: center; justify-content: center; background: rgba(1, 8, 4, 0.6); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid rgba(255, 255, 255, 0.03); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .section-title { font-family: var(--font-heading); font-size: clamp(1.9rem, 4.5vw, 3.1rem); font-weight: 700; text-transform: uppercase; letter-spacing: 5px; color: var(--off-white); display: inline-block; }
         .section-title .accent { color: var(--br-light) }
         .title-divider { width: 0; height: 3px; margin: 15px auto 0; border-radius: 3px; background: linear-gradient(90deg, var(--forest-bright), var(--br-green), var(--br-light)); transition: width 1.3s ease-out .35s; }
@@ -217,7 +227,7 @@
 
         /* ── HEADER ─────────────────────────────────────────────── */
         header { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-h); z-index: 3000; display: flex; align-items: center; justify-content: center; background: rgba(2, 13, 7, .88); backdrop-filter: blur(22px) saturate(160%); border-bottom: 1px solid rgba(22, 163, 74, .18); transition: .4s; }
-        header.scrolled { background: rgba(2, 13, 7, .97); box-shadow: 0 3px 30px rgba(0, 0, 0, .55), 0 1px 0 rgba(22, 163, 74, .2); }
+        header.scrolled { background: rgba(1, 8, 4, 0.85); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); border-bottom: 1px solid var(--glass-border); padding: 5px 0; }
         .nav-container { width: 100%; max-width: 1400px; padding: 0 5%; display: flex; justify-content: space-between; align-items: center }
         .logo { font-family: var(--font-heading); font-size: 1.55rem; font-weight: 700; color: var(--off-white); letter-spacing: 5px }
         .logo .logo-accent { color: var(--br-light) }
@@ -242,21 +252,35 @@
         }
         
         /* Image de fond en remplacement de Spline */
+        .hero-bg-container {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            will-change: transform;
+        }
         .hero-bg { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* Remplit l'écran sans écraser l'image */
-            object-position: center center; /* Force le point de focus au centre sur mobile */
-            z-index: 0; 
-            border: none;
-            pointer-events: none; 
-            filter: contrast(1.1) brightness(0.65); /* Intègre l'image dans le fond sombre */
+            object-fit: cover; 
+            object-position: center; 
+            filter: contrast(1.15) brightness(0.4) saturate(1.2); 
+            transform: scale(1.05);
+            transition: transform 0.2s ease-out;
         }
-        
-        /* Effet immersif : ombres profondes sur les bords pour fondre l'image dans la page */
+        .hero-glow-orb {
+            position: absolute;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(14, 165, 84, 0.1) 40%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 1;
+            pointer-events: none;
+            animation: floatElements 20s infinite ease-in-out;
+        }
         .hero-vignette {
             position: absolute;
             inset: 0;
@@ -307,14 +331,14 @@
             pointer-events: none;
         }
 
-        .hero-eyebrow { display: block; font-size: .72rem; letter-spacing: 6px; text-transform: uppercase; color: var(--br-light); margin-bottom: 22px; animation: fadeUp .6s ease both; text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 25px rgba(0,0,0,0.8); font-weight: 700; }
+        .hero-eyebrow { display: inline-block; font-size: 0.75rem; letter-spacing: 8px; text-transform: uppercase; color: var(--br-yellow); margin-bottom: 24px; font-weight: 600; padding: 8px 20px; border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 50px; background: rgba(234, 179, 8, 0.05); backdrop-filter: blur(10px); animation: fadeUp .8s ease both; }
         .hero-title { font-family: var(--font-heading); font-size: clamp(3rem, 9vw, 5.8rem); line-height: 1.0; text-transform: uppercase; letter-spacing: 3px; animation: fadeUp .65s .1s ease both; text-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.9); }
         .hero-title .t-main { display: block; color: var(--off-white) }
         .hero-title .t-accent { display: block; font-style: italic; font-weight: 400; font-size: .52em; margin-top: 10px; letter-spacing: 5px; color: var(--br-light); text-shadow: 0 5px 25px rgba(0,0,0,0.9), 0 0 20px rgba(22, 163, 74, 0.5); }
         .hero-sub { margin-top: 18px; font-size: .78rem; letter-spacing: 4px; color: var(--off-white); text-transform: uppercase; animation: fadeUp .65s .2s ease both; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-weight: 500; }
-        .hero-cta { display: inline-block; pointer-events: auto; margin-top: 45px; padding: 17px 52px; background: linear-gradient(135deg, var(--br-dark), var(--br-green)); color: var(--off-white); font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: .8rem; border-radius: 50px; border: none; cursor: pointer; transition: .4s; animation: fadeUp .65s .3s ease both; box-shadow: 0 10px 40px rgba(22, 163, 74, .3); position: relative; overflow: hidden; }
+        .hero-cta { display: inline-flex; align-items: center; justify-content: center; gap: 12px; pointer-events: auto; margin-top: 50px; padding: 18px 56px; background: linear-gradient(135deg, var(--br-green), var(--forest-bright)); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: fadeUp .8s .4s ease both; box-shadow: 0 15px 35px rgba(14, 165, 84, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2); position: relative; overflow: hidden; }
         .hero-cta::after { content: ''; position: absolute; top: 0; left: -110%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent); transform: skewX(-20deg); }
-        .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 16px 50px rgba(22, 163, 74, .45) }
+        .hero-cta:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 45px rgba(14, 165, 84, 0.5), 0 0 20px rgba(234, 179, 8, 0.4); text-shadow: 0 0 8px rgba(255,255,255,0.5); border-color: rgba(234, 179, 8, 0.5); }
         .hero-cta:hover::after { animation: shimmer .6s ease }
 
         /* ── FOND ANIMÉ BRÉSIL ──────────────────────────────────── */
@@ -356,19 +380,26 @@
         #signature::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 50% at 95% 10%, rgba(22, 163, 74, .07) 0%, transparent 60%), radial-gradient(ellipse 40% 60% at 5% 80%, rgba(37, 148, 63, .08) 0%, transparent 55%); }
         .signature-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.7fr; gap: 80px; align-items: center; }
         .signature-photo-wrap { position: relative }
-        .signature-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top center; border-radius: 28px; border: 1px solid rgba(22, 163, 74, .25); box-shadow: 0 30px 80px rgba(0, 0, 0, .55), 0 0 0 1px rgba(37, 148, 63, .1); transition: .5s; filter: brightness(.93) contrast(1.06) saturate(1.15); }
+        .signature-photo { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: top center; border-radius: 32px; border: 1px solid rgba(234, 179, 8, 0.2); box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05); transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: brightness(0.95) contrast(1.1); }
         .signature-photo:hover { transform: scale(1.02); border-color: rgba(22, 163, 74, .5) }
         .signature-badge { position: absolute; bottom: -18px; left: -18px; width: 85px; height: 85px; border-radius: 50%; background: linear-gradient(135deg, var(--br-dark), var(--br-green)); border: 2px solid rgba(74, 222, 128, .3); display: flex; align-items: center; justify-content: center; font-size: 1.9rem; box-shadow: 0 8px 28px rgba(22, 163, 74, .4); animation: floatCard 4.5s ease-in-out infinite; will-change: transform; }
         
         /* Ajout d'un panneau Glassmorphism pour rendre le texte très lisible */
         .signature-text {
-            background: rgba(6, 20, 8, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(250, 204, 21, 0.15);
-            border-radius: 28px;
-            padding: 45px;
-            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.5);
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 55px;
+            box-shadow: var(--glass-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .signature-text::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(125deg, rgba(234, 179, 8, 0.1), transparent 40%, transparent 60%, rgba(14, 165, 84, 0.05));
+            pointer-events: none;
         }
         
         .signature-text h2 { font-family: var(--font-heading); font-size: clamp(1.9rem, 3.2vw, 2.7rem); color: var(--off-white); margin-bottom: 8px; line-height: 1.1; }
@@ -400,8 +431,8 @@
             transform: rotateY(180deg); 
         }
         .card-container:hover .card-front {
-            box-shadow: 0 25px 60px rgba(22, 163, 74, 0.3), 0 0 25px rgba(250, 204, 21, 0.2);
-            border-color: rgba(250, 204, 21, 0.4);
+            box-shadow: 0 30px 80px rgba(14, 165, 84, 0.4), 0 0 40px rgba(234, 179, 8, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            border-color: rgba(234, 179, 8, 0.6);
         }
 
         /* Correction Bug : backface-visibility strict */
@@ -456,12 +487,14 @@
 
         /* FACE ARRIÈRE - Luxueuse et claire */
         .card-back { 
-            background: linear-gradient(145deg, #05180B, #010603); 
-            border: 1px solid rgba(22, 163, 74, 0.3); 
+            background: linear-gradient(145deg, rgba(14, 69, 27, 0.95), rgba(1, 8, 4, 0.98)); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(234, 179, 8, 0.4); 
             transform: rotateY(180deg); 
             -webkit-transform: rotateY(180deg);
             text-align: left; align-items: flex-start; overflow-y: auto; 
-            box-shadow: inset 0 0 40px rgba(250, 204, 21, 0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 60px rgba(234, 179, 8, 0.1);
         }
         .card-back h3 { 
             color: var(--br-yellow); font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 18px; width: 100%; text-align: center; padding-bottom: 15px; border-bottom: 1px solid rgba(250, 204, 21, 0.2); font-weight: 600; 
@@ -958,7 +991,11 @@
     <!-- ═══ HERO ═══ -->
     <section id="hero">
         <!-- Image de fond remplaçant la 3D Spline -->
-        <img src="fond.jpg" alt="Fond tropical NEY LISS" class="hero-bg" onerror="this.src='https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop'">
+         <div class="hero-bg-container" id="parallax-bg">
+            <img src="fond.jpg" alt="Fond tropical NEY LISS" class="hero-bg" onerror="this.src='https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop'">
+            <div class="hero-glow-orb" style="width: 800px; height: 800px; top: -20%; left: -10%;"></div>
+            <div class="hero-glow-orb" style="width: 600px; height: 600px; bottom: -10%; right: -10%; animation-delay: -5s;"></div>
+        </div>
         
         <!-- Calque immersif par-dessus l'image -->
         <div class="hero-vignette"></div>
@@ -1602,6 +1639,46 @@
 
     <!-- ═══ JAVASCRIPT ═══ -->
     <script>
+        // Parallax Effect for Hero Background
+        document.addEventListener('mousemove', (e) => {
+            const bg = document.getElementById('parallax-bg');
+            if(bg && window.scrollY < window.innerHeight) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20; // max 20px shift
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                bg.style.transform = `translate(${-x}px, ${-y}px)`;
+            }
+        });
+        
+        // Advanced Tilt Effect for Cards
+        document.querySelectorAll('.card-container').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                if(card.classList.contains('flipped')) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                const inner = card.querySelector('.card-front');
+                if(inner) {
+                    inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const inner = card.querySelector('.card-front');
+                if(inner) {
+                    inner.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                    inner.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                }
+            });
+            card.addEventListener('mouseenter', () => {
+                const inner = card.querySelector('.card-front');
+                if(inner) inner.style.transition = 'none';
+            });
+        });
+        
         // Importer FontAwesome pour les icônes (si ce n'est pas déjà fait ailleurs)
         const fontAwesome = document.createElement('link');
         fontAwesome.rel = 'stylesheet';
