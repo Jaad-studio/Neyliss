@@ -728,23 +728,23 @@
             /* -- AJUSTEMENT PARFAIT POUR L'IMAGE SUR TÉLÉPHONE -- */
             .hero-bg-container {
                 display: flex;
-                align-items: center;
+                align-items: flex-start; /* Colle l'image tout en haut */
                 justify-content: center;
             }
             .hero-bg {
-                width: 125% !important; /* Léger zoom pour mieux remplir l'écran verticalement sans couper le texte */
-                height: auto !important; /* Respecte les proportions de l'image (pas d'étirement) */
+                width: 140% !important; /* Garde le texte lisible sans couper les côtés */
+                height: auto !important; 
                 flex-shrink: 0;
                 object-fit: cover !important;
                 
-                /* LE SECRET : Masque de fusion qui efface les bordures dures en haut et en bas ! */
-                -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-                mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-                object-position: center !important;
+                /* Le masque démarre à 100% visible (noir) en haut, et ne s'efface qu'en bas */
+                -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+                mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+                object-position: center top !important; /* Force l'affichage depuis le haut de l'image */
             }
             .hero-vignette {
-                /* On adoucit la vignette sombre centrale pour laisser respirer l'image */
-                background: radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(1, 8, 4, 0.9) 100%);
+                /* Assombrit uniquement le bas pour fusionner avec la suite du site */
+                background: linear-gradient(to top, var(--forest-abyss) 10%, transparent 40%);
                 box-shadow: none;
             }
         }
@@ -1401,15 +1401,13 @@
                     introVideo.src = "jungle_intro_desktop.mp4"; // Vidéo horizontale 16:9
                 }
 
-                // FORCER LE CHARGEMENT ET LA LECTURE POUR MOBILE
-                introVideo.load();
+                // FORCER LA LECTURE (sans le load() qui peut causer un bug d'interruption sur iPhone)
                 const playPromise = introVideo.play();
                 
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        // Si le navigateur bloque la vidéo (ex: Mode Économie d'Énergie sur iPhone)
-                        // On passe l'intro pour ne pas bloquer la cliente sur un écran noir
-                        console.log("Lecture automatique bloquée par le téléphone.");
+                        // Si le navigateur bloque la vidéo (ex: Mode Économie d'Énergie sur iPhone ou erreur de fichier)
+                        console.log("Lecture automatique bloquée par le téléphone ou fichier introuvable.");
                         finishPreloader();
                     });
                 }
