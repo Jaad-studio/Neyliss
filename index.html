@@ -505,9 +505,31 @@
         .card-back ul li { font-size: .82rem; margin-bottom: 12px; font-weight: 500; color: var(--off-white); display: flex; align-items: center; gap: 12px; }
         
         /* Puces festives */
-        .card-back ul li::before { content: '✨'; font-size: .75rem; text-shadow: 0 0 5px var(--br-yellow); }
+        .card-back ul li::before { content: '🌺'; font-size: .85rem; text-shadow: 0 0 5px var(--br-yellow); }
         
-        .reserve-mini-btn { margin-top: auto; align-self: center; padding: 14px 40px; background: linear-gradient(135deg, var(--br-dark), var(--br-green)); color: var(--off-white); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 50px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: .78rem; transition: .35s; box-shadow: 0 8px 25px rgba(22, 163, 74, .3); position: relative; overflow: hidden; }
+        .reserve-mini-btn { 
+            margin-top: auto; 
+            align-self: center; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            padding: 14px 40px; 
+            background: linear-gradient(135deg, var(--br-dark), var(--br-green)); 
+            color: var(--off-white); 
+            border: 1px solid rgba(250, 204, 21, 0.3); 
+            border-radius: 50px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            text-indent: 2px; /* Compense le letter-spacing pour un centrage parfait */
+            font-size: .78rem; 
+            transition: .35s; 
+            box-shadow: 0 8px 25px rgba(22, 163, 74, .3); 
+            position: relative; 
+            overflow: hidden; 
+        }
         .reserve-mini-btn::after { content: ''; position: absolute; top: 0; left: -110%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .3), transparent); transform: skewX(-20deg); }
         .reserve-mini-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 35px rgba(22, 163, 74, .5), 0 0 15px rgba(250, 204, 21, 0.4); border-color: rgba(250, 204, 21, 0.8); color: var(--br-yellow); }
         .reserve-mini-btn:hover::after { animation: shimmer .6s ease }
@@ -725,9 +747,17 @@
             .signature-text { padding: 30px 20px; } /* Ajustement mobile pour le cadre */
             .signature-photo { aspect-ratio: 4/3; max-height: 320px }
             
-            /* Si le sujet principal de votre image n'est pas au centre, vous pouvez ajuster le cadrage ici pour le mobile */
+            /* Ajustement pour que l'image (et le texte Ney Liss dessus) ne soit pas zoomée/coupée sur mobile */
+            .hero-bg-container {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
             .hero-bg {
-                object-position: center; /* Remplacez 'center' par 'left', 'right', 'top' ou 'bottom' si nécessaire */
+                object-fit: cover; /* Doit rester en cover pour remplir la page et ne pas laisser de fond vide */
+                object-position: center;
+                transform: scale(1); /* Retire le zoom excessif de l'animation pour montrer le plus de largeur possible */
             }
         }
 
@@ -870,7 +900,7 @@
         <div class="hero-vignette"></div>
         
         <div class="hero-content">
-            <span class="hero-eyebrow">✦ L'Excellence du Soin Capillaire ✦</span>
+            <span class="hero-eyebrow">L'Excellence du Soin Capillaire</span>
             <h1 class="hero-title" style="display: none;">Lissage Indien</h1>
             <p class="hero-sub">Romans-sur-Isère</p>
             <button class="hero-cta" onclick="scrollToBooking()">Réserver ma séance</button>
@@ -892,9 +922,10 @@
                 <span class="sig-subtitle">Qui sommes-nous ?</span>
                 <h2><span>NEY LISS</span><br>L'Expertise Capillaire</h2>
                 <div class="sig-divider"></div>
-                <p><strong>NEY LISS</strong> est née d'une passion profonde pour l'art du cheveu. Parce que votre chevelure est une signature unique, elle exige une maîtrise absolue et un soin d'exception.</p>
-                <p>Nous avons minutieusement sélectionné les <strong>techniques brésiliennes les plus prestigieuses</strong> et les technologies les plus avancées du secteur. Notre promesse : vous garantir un résultat irréprochable, à la hauteur de vos standards.</p>
-                <p>Notre philosophie repose sur l'exigence du sur-mesure. Analyser votre fibre capillaire, comprendre votre histoire et vous offrir une expérience luxueuse pour <strong>révéler instantanément la beauté de vos cheveux</strong>.</p>
+                <p><strong>NEY LISS</strong> est née d’une passion absolue pour l'art capillaire. Parce que vos cheveux sont une véritable signature, ils exigent une expertise d'exception.</p>
+                <p>Nous avons minutieusement sélectionné les <strong>techniques brésiliennes les plus prestigieuses</strong> et les soins haut de gamme les plus performants du marché pour vous garantir un résultat irréprochable.</p>
+                <p>Chaque femme est unique, sa chevelure aussi. C’est pourquoi notre approche est 100% sur-mesure : un diagnostic précis, une écoute attentive et des solutions parfaitement adaptées à vos besoins.</p>
+                <p>Plus qu’un savoir-faire, <strong>NEY LISS</strong> incarne une promesse : allier passion et excellence pour révéler instantanément la beauté de vos cheveux.</p>
             </div>
         </div>
     </section>
@@ -919,12 +950,13 @@
                             </div>
                             <div class="card-face card-back">
                                 <h3>Lissage Nano Indien</h3>
-                                <p>Le must du lissage protéiné. Lisse à 100% même les cheveux les plus résistants tout en les reconstruisant en profondeur.</p>
+                                <p>Lissage protéiné sans formol offrant 100% de raideur, même sur cheveux très résistants. Il apporte une brillance miroir et favorise la pousse en réduisant l'utilisation des appareils chauffants. Résultat durable : seules les repousses seront à traiter par la suite.</p>
                                 <ul>
-                                    <li>Shampoing Clarifiant</li>
-                                    <li>Lissage Protéiné Intense</li>
+                                    <li>Shampoing</li>
+                                    <li>Lissage Nano Indien</li>
                                     <li>Luminothérapie</li>
-                                    <li>Coupe des pointes</li>
+                                    <li>Soin</li>
+                                    <li>Égalisation des pointes</li>
                                 </ul>
                                 <button class="reserve-mini-btn" onclick="event.stopPropagation();preselect('Lissage Nano Indien')">Réserver</button>
                             </div>
@@ -933,16 +965,16 @@
                     <div class="card-container" onclick="handleCardClick(this,'Lissage Californien')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-sun card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title">Californien</h3>
                                 <span class="card-subtitle">Vegan &amp; Doux</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Lissage Californien</h3>
-                                <p>Dernière génération, idéal pour les cheveux fins ou sensibilisés. Répare intensément sans alourdir.</p>
+                                <p>Idéal pour les cheveux fins ou sensibilisés. Cette formule vegan et sans formol détend la fibre, réduit les frisottis et préserve votre volume naturel. Enrichi en agents réparateurs (plex), il agit comme un soin profond pendant 4 à 6 mois.</p>
                                 <ul>
-                                    <li>Shampoing Clarifiant</li>
-                                    <li>Lissage California Vegan</li>
+                                    <li>Shampoing</li>
+                                    <li>Lissage California</li>
                                     <li>Luminothérapie</li>
                                     <li>Égalisation des pointes</li>
                                 </ul>
@@ -955,23 +987,23 @@
 
             <!-- ▸ NOS SOINS LISSANTS -->
             <div class="presta-category">
-                <div class="presta-cat-label"><i class="fas fa-gem"></i> Nos Soins Lissants</div>
+                <div class="presta-cat-label"><i class="fas fa-leaf"></i> Nos Soins Lissants</div>
                 <div class="presta-row">
                     <div class="card-container" onclick="handleCardClick(this,'Botox Lissant Gloss')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-gem card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title">Botox Gloss</h3>
                                 <span class="card-subtitle">Brillance Miroir</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Botox Lissant Gloss</h3>
-                                <p>Un botox capillaire lissant qui allie soin profond et action gainante pour sublimer la chevelure sans l'alourdir.</p>
+                                <p>Alliance parfaite entre soin réparateur et action gainante. Il détend légèrement la fibre, réduit le volume et discipline les frisottis sans alourdir. Offre une souplesse et une brillance extrême effet miroir pour une tenue de 3 à 4 mois.</p>
                                 <ul>
-                                    <li>Réduit le volume</li>
-                                    <li>Discipline les frisottis</li>
-                                    <li>Brillance miroir</li>
-                                    <li>Tenue 3 à 4 mois</li>
+                                    <li>Shampoing</li>
+                                    <li>Botox Gloss</li>
+                                    <li>Luminothérapie</li>
+                                    <li>Égalisation des pointes</li>
                                 </ul>
                                 <button class="reserve-mini-btn" onclick="event.stopPropagation();preselect('Botox Lissant Gloss')">Réserver</button>
                             </div>
@@ -982,23 +1014,23 @@
 
             <!-- ▸ NOS SOINS NON LISSANTS -->
             <div class="presta-category">
-                <div class="presta-cat-label"><i class="fas fa-spa"></i> Nos Soins Non Lissants</div>
+                <div class="presta-cat-label"><i class="fas fa-leaf"></i> Nos Soins Non Lissants</div>
                 <div class="presta-row">
                     <div class="card-container" onclick="handleCardClick(this,'Botox Silk')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-feather-alt card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title">Botox Silk</h3>
                                 <span class="card-subtitle">Légèreté &amp; Soie</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Botox Silk</h3>
-                                <p>Enrichi en protéine de soie, ce soin apporte une chevelure légère, fluide et sublimée sans effet lissant.</p>
+                                <p>Soin profond non lissant à la protéine de soie pour une chevelure fluide et ultra-lumineuse. Il restaure la texture globale du cheveu tout en préservant son mouvement naturel avec des résultats visibles dès la première application.</p>
                                 <ul>
-                                    <li>Protéine de soie</li>
-                                    <li>Stimule la pousse</li>
-                                    <li>Limite la casse</li>
-                                    <li>Nutrition intense</li>
+                                    <li>Shampoing</li>
+                                    <li>Botox Silk</li>
+                                    <li>Luminothérapie</li>
+                                    <li>Égalisation des pointes</li>
                                 </ul>
                                 <button class="reserve-mini-btn" onclick="event.stopPropagation();preselect('Botox Silk')">Réserver</button>
                             </div>
@@ -1007,18 +1039,18 @@
                     <div class="card-container" onclick="handleCardClick(this,'Botox Amazonia')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-water card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title">Botox Amazonia</h3>
                                 <span class="card-subtitle">Nature &amp; Vitalité</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Botox Amazonia</h3>
-                                <p>Inspiré des richesses de l'Amazonie, ce botox nourrit en profondeur et redonne vie à la fibre capillaire abîmée.</p>
+                                <p>Traitement nutritif et revitalisant intense. Formulé à base d'actifs végétaux d'Amazonie (vegan, sans silicones), il répare les cheveux secs et fragilisés pour une hydratation durable et une santé capillaire totalement restaurée.</p>
                                 <ul>
-                                    <li>Actifs naturels amazoniens</li>
-                                    <li>Répare la fibre en profondeur</li>
-                                    <li>Anti-casse &amp; anti-chute</li>
-                                    <li>Brillance naturelle</li>
+                                    <li>Shampoing</li>
+                                    <li>Botox Amazonia</li>
+                                    <li>Luminothérapie</li>
+                                    <li>Égalisation des pointes</li>
                                 </ul>
                                 <button class="reserve-mini-btn" onclick="event.stopPropagation();preselect('Botox Amazonia')">Réserver</button>
                             </div>
@@ -1029,22 +1061,23 @@
 
             <!-- ▸ NOS FORFAITS -->
             <div class="presta-category">
-                <div class="presta-cat-label"><i class="fas fa-star"></i> Nos Forfaits</div>
+                <div class="presta-cat-label"><i class="fas fa-leaf"></i> Nos Forfaits</div>
                 <div class="presta-row">
                     <div class="card-container" onclick="handleCardClick(this,'Forfait Lissage Racines')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-sync-alt card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title" style="font-size:1.4rem">Racines</h3>
                                 <span class="card-subtitle">Entretien racines</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Forfait Lissage Racines</h3>
-                                <p>Réservé aux clientes ayant effectué leur lissage chez NEY LISS. Traite uniquement la repousse pour un résultat homogène.</p>
+                                <p>Service exclusif (jusqu'à 6 mois après le dernier lissage NEY LISS). Traitement ciblé sur les repousses pour unifier la chevelure sans surcharger et préserver les longueurs déjà lisses.</p>
                                 <ul>
-                                    <li>Valable 6 mois</li>
-                                    <li>Préserve les longueurs</li>
-                                    <li>Résultat homogène garanti</li>
+                                    <li>Lissage racine</li>
+                                    <li>Soin nourrissant</li>
+                                    <li>Luminothérapie</li>
+                                    <li>Égalisation des pointes</li>
                                 </ul>
                                 <button class="reserve-mini-btn" onclick="event.stopPropagation();preselect('Forfait Lissage Racines')">Réserver</button>
                             </div>
@@ -1053,13 +1086,13 @@
                     <div class="card-container" onclick="handleCardClick(this,'Forfait Racines + Botox')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-layer-group card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title" style="font-size:1.3rem">Racines + Botox</h3>
                                 <span class="card-subtitle">Entretien &amp; soin</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Racines + Botox</h3>
-                                <p>La combinaison idéale : entretien de la repousse et soin botox pour une chevelure lisse et ultra nourrie en une seule séance.</p>
+                                <p>Le combo parfait : lissage des repousses aux racines associé à un soin Botox nutritif sur l'ensemble de la chevelure. Un résultat lisse, unifié et revitalisé en une seule séance.</p>
                                 <ul>
                                     <li>Traitement racines</li>
                                     <li>Soin botox inclus</li>
@@ -1073,13 +1106,13 @@
                     <div class="card-container" onclick="handleCardClick(this,'Forfait Botox Complet')">
                         <div class="card-inner">
                             <div class="card-face card-front">
-                                <i class="fas fa-crown card-icon"></i>
+                                <i class="fas fa-leaf card-icon"></i>
                                 <h3 class="card-title" style="font-size:1.3rem">Botox Complet</h3>
                                 <span class="card-subtitle">L'expérience totale</span>
                             </div>
                             <div class="card-face card-back">
                                 <h3>Forfait Botox Complet</h3>
-                                <p>L'expérience ultime NEY LISS pour des cheveux métamorphosés de la racine aux pointes.</p>
+                                <p>L'expérience ultime de soin sur-mesure NEY LISS pour une métamorphose complète et une réparation en profondeur, de la racine aux pointes.</p>
                                 <ul>
                                     <li>Gommage du cuir chevelu</li>
                                     <li>Botox capillaire</li>
@@ -1230,7 +1263,8 @@
                 </div>
                 <h3 class="booking-headline">Réservez votre <span>expérience</span></h3>
                 <p class="booking-intro">
-                    Chaque prise de rendez-vous chez <strong>Ney Liss</strong> fait l'objet d'une attention particulière afin de garantir une prestation parfaitement adaptée à vos besoins.
+                    Chaque prise de rendez-vous chez <strong>Ney Liss</strong> fait l'objet d'une attention particulière afin de garantir une prestation parfaitement adaptée à vos besoins.<br><br>
+                    Pour permettre l’élaboration d’un premier diagnostic personnalisé, merci de transmettre :
                 </p>
                 <div class="booking-requirements">
                     <div class="req-item">
