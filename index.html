@@ -268,13 +268,15 @@
             height: 100%; 
             object-fit: cover; 
             object-position: center; 
-            filter: contrast(1.15) brightness(0.4) saturate(1.2); 
+            /* Rendu beaucoup plus pétant, style Rio (plus lumineux, plus saturé) */
+            filter: contrast(1.1) brightness(0.85) saturate(1.6); 
             transform: scale(1.05);
             transition: transform 0.2s ease-out;
         }
         .hero-glow-orb {
             position: absolute;
-            background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(14, 165, 84, 0.1) 40%, transparent 70%);
+            /* Lueurs plus intenses aux couleurs du Brésil */
+            background: radial-gradient(circle, rgba(250, 204, 21, 0.25) 0%, rgba(34, 197, 94, 0.2) 40%, transparent 70%);
             border-radius: 50%;
             filter: blur(60px);
             z-index: 1;
@@ -286,10 +288,11 @@
             inset: 0;
             z-index: 1;
             pointer-events: none;
+            /* Vignette assombrie allégée pour laisser éclater les couleurs */
             background: 
-                radial-gradient(ellipse at 50% 50%, transparent 35%, var(--forest-abyss) 100%),
-                linear-gradient(0deg, var(--forest-abyss) 0%, transparent 20%, transparent 80%, var(--forest-abyss) 100%);
-            box-shadow: inset 0 0 120px rgba(2, 13, 7, 0.95);
+                radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(1, 8, 4, 0.8) 100%),
+                linear-gradient(0deg, var(--forest-abyss) 0%, transparent 15%, transparent 85%, var(--forest-abyss) 100%);
+            box-shadow: inset 0 0 60px rgba(2, 13, 7, 0.6);
         }
 
         /* Animation de la brume de jungle */
