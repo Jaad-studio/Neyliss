@@ -497,6 +497,39 @@
         .ai-textarea::placeholder { color: rgba(237, 245, 236, .28) }
         .ai-error { color: #FF7E72; font-size: .87rem; margin-top: 12px; display: none; background: rgba(255, 126, 114, .08); padding: 10px; border-radius: 10px }
 
+        /* Bouton Retour Diagnostic IA */
+        .btn-back-wiz {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-back-wiz i {
+            transition: transform 0.5s ease;
+        }
+        .btn-back-wiz:hover {
+            color: var(--br-yellow);
+            border-color: rgba(250, 204, 21, 0.4);
+            background: rgba(250, 204, 21, 0.05);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .btn-back-wiz:hover i {
+            transform: rotate(-180deg);
+        }
+
         /* ── INSPIRATIONS ───────────────────────────────────────── */
         #gallery { padding: 85px 0; background: transparent; }
         .gallery-scroller { display: flex; overflow-x: auto; padding: 15px 5%; gap: 22px; scrollbar-width: none; -webkit-overflow-scrolling: touch }
@@ -1251,7 +1284,9 @@
                     <p id="res-desc" style="color:var(--text-muted);line-height:1.75;margin-bottom:25px;font-size:.9rem;text-align:justify"></p>
                     <button class="reserve-mini-btn" id="res-btn" style="padding:15px 45px;font-size:.9rem">Réserver ce soin</button>
                 </div>
-                <button class="btn-back-wiz" style="margin-top:28px" onclick="resetAiDiagnostic()">Nouvelle consultation</button>
+                <button class="btn-back-wiz" onclick="resetAiDiagnostic()">
+                    <i class="fas fa-undo"></i> Nouvelle consultation
+                </button>
             </div>
         </div>
     </section>
