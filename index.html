@@ -927,11 +927,8 @@
 
     <!-- ═══ PRELOADER VIDEO JUNGLE ═══ -->
     <div id="preloader">
-        <!-- Utilisation native HTML5 pour garantir la lecture sur iOS/Android -->
-        <video id="intro-video" autoplay muted playsinline webkit-playsinline preload="auto">
-            <source src="jungle_intro_mobile.mp4" type="video/mp4" media="(max-width: 768px)">
-            <source src="jungle_intro_desktop.mp4" type="video/mp4">
-        </video>
+        <!-- Balise vidéo épurée pour éviter les conflits iOS -->
+        <video id="intro-video" muted playsinline webkit-playsinline></video>
         <button class="skip-btn" onclick="skipIntro()">Passer l'intro</button>
     </div>
 
@@ -1861,21 +1858,29 @@
             const introVideo = document.getElementById('intro-video');
             
             if (introVideo) {
-                // 1. On attache les événements AVANT de lancer la vidéo pour ne rien rater
+                // 1. Détection de l'appareil
+                const isMobile = window.innerWidth <= 768;
+                introVideo.src = isMobile ? "jungle_intro_mobile.mp4" : "jungle_intro_desktop.mp4";
+
+                // 2. On attache les événements AVANT de lancer
                 introVideo.addEventListener('ended', finishPreloader);
                 introVideo.addEventListener('error', finishPreloader);
                 
-                // 2. Sécurité : on force la fin après 8 secondes max (évite un écran noir infini si la connexion est mauvaise)
-                setTimeout(finishPreloader, 8000); 
+                // 3. Sécurité : force la fin après 8 secondes (évite d'être bloqué sur l'écran noir)
+                let failsafeTimeout = setTimeout(finishPreloader, 8000); 
 
-                // 3. FORCER LA LECTURE : Safari iOS a parfois besoin qu'on lui rappelle de jouer
+                // 4. Chargement et lecture forcée
+                introVideo.load();
                 const playPromise = introVideo.play();
                 
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        // Si le navigateur bloque la vidéo (ex: Mode Économie d'Énergie sur iPhone ou erreur de fichier)
-                        console.log("Lecture automatique bloquée par le téléphone ou fichier introuvable.", error);
-                        finishPreloader();
+                    playPromise.then(() => {
+                        // La vidéo joue correctement
+                    }).catch(error => {
+                        // Bloqué par le téléphone (économie d'énergie ou format incompatible)
+                        console.log("Lecture automatique bloquée", error);
+                        clearTimeout(failsafeTimeout);
+                        finishPreloader(); // On passe l'intro immédiatement
                     });
                 }
             } else {
