@@ -503,15 +503,81 @@
         .gallery-video { min-width: 280px; height: 460px; border-radius: var(--r); object-fit: cover; background: #000; border: 1px solid rgba(22, 163, 74, .15); transition: .5s; box-shadow: 0 8px 35px rgba(0, 0, 0, .45); cursor: pointer; }
         .gallery-video:hover { transform: scale(1.04) translateY(-6px); border-color: var(--br-green); box-shadow: 0 22px 55px rgba(0, 0, 0, .55) }
 
-        /* ── AVIS ───────────────────────────────────────────────── */
+        /* ── AVIS (SLIDER) ──────────────────────────────────────── */
         #reviews { padding: 110px 5%; background: transparent; }
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 380px)); justify-content: center; gap: 25px; max-width: 1400px; margin: 40px auto 0 }
-        .review-card { background: rgba(20, 61, 30, .45); border: 1px solid rgba(37, 148, 63, .16); padding: 34px 26px; border-radius: var(--r); text-align: center; transition: .5s; backdrop-filter: blur(12px); animation: floatCard 7s ease-in-out infinite; box-shadow: 0 4px 22px rgba(0, 0, 0, .28); border-top: 2px solid rgba(22, 163, 74, .35); will-change: transform; }
-        .review-card:nth-child(even) { animation-delay: -3.5s }
-        .review-card:hover { animation-play-state: paused; transform: translateY(-10px); box-shadow: 0 20px 55px rgba(0, 0, 0, .45); border-top-color: var(--br-green) }
+        .reviews-slider-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding: 0 60px; /* Espace pour les flèches sur les côtés */
+        }
+        .reviews-track {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Masque la scrollbar Firefox */
+            -ms-overflow-style: none; /* Masque la scrollbar IE/Edge */
+            padding: 20px 10px; /* Laisse de l'espace pour l'ombre portée au hover */
+            scroll-behavior: smooth; /* Défilement fluide */
+        }
+        .reviews-track::-webkit-scrollbar { 
+            display: none; /* Masque la scrollbar Chrome/Safari */
+        }
+        
+        .review-card { 
+            scroll-snap-align: center; /* S'arrête toujours parfaitement sur une carte */
+            flex: 0 0 auto;
+            min-width: 340px; /* Largeur fixe de la carte */
+            background: rgba(20, 61, 30, .45); 
+            border: 1px solid rgba(37, 148, 63, .16); 
+            padding: 34px 26px; 
+            border-radius: var(--r); 
+            text-align: center; 
+            transition: .5s; 
+            backdrop-filter: blur(12px); 
+            box-shadow: 0 4px 22px rgba(0, 0, 0, .28); 
+            border-top: 2px solid rgba(22, 163, 74, .35); 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .review-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 55px rgba(0, 0, 0, .45); 
+            border-top-color: var(--br-green) 
+        }
         .stars { margin-bottom: 16px; font-size: 1rem; color: var(--amber-bright) }
-        .review-text { color: var(--text-muted); font-size: .87rem; line-height: 1.78; font-style: italic }
-        .client-tag { display: inline-block; margin-top: 16px; padding: 5px 15px; border-radius: 50px; font-size: .67rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; background: rgba(22, 163, 74, .12); border: 1px solid rgba(22, 163, 74, .35); color: var(--br-light); }
+        .review-text { color: var(--text-muted); font-size: .87rem; line-height: 1.78; font-style: italic; margin-bottom: 15px; }
+        .client-tag { display: inline-block; margin-top: auto; padding: 5px 15px; border-radius: 50px; font-size: .67rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; background: rgba(22, 163, 74, .12); border: 1px solid rgba(22, 163, 74, .35); color: var(--br-light); align-self: center; }
+
+        /* Flèches du Slider */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--br-dark), var(--br-green));
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            color: var(--br-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
+        }
+        .slider-arrow:hover {
+            background: var(--br-yellow);
+            color: var(--forest-abyss);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .prev-arrow { left: 0; }
+        .next-arrow { right: 0; }
 
         /* ── FAQ ────────────────────────────────────────────────── */
         #faq { padding: 110px 5%; background: transparent; }
@@ -747,6 +813,11 @@
                 background: linear-gradient(to top, var(--forest-abyss) 10%, transparent 40%);
                 box-shadow: none;
             }
+            
+            /* Enlever les flèches du slider sur mobile (l'utilisateur swipe) */
+            .reviews-slider-container { padding: 0 15px; }
+            .slider-arrow { display: none; }
+            .review-card { min-width: 85vw; }
         }
     </style>
 </head>
@@ -773,8 +844,11 @@
 
     <!-- ═══ PRELOADER VIDEO JUNGLE ═══ -->
     <div id="preloader">
-        <!-- La balise source a été retirée, la vidéo sera injectée par le script en bas de page -->
-        <video id="intro-video" autoplay muted playsinline></video>
+        <!-- Utilisation native HTML5 pour garantir la lecture sur iOS/Android -->
+        <video id="intro-video" autoplay muted playsinline webkit-playsinline preload="auto">
+            <source src="jungle_intro_mobile.mp4" type="video/mp4" media="(max-width: 768px)">
+            <source src="jungle_intro_desktop.mp4" type="video/mp4">
+        </video>
         <button class="skip-btn" onclick="skipIntro()">Passer l'intro</button>
     </div>
 
@@ -1156,33 +1230,137 @@
         </div>
     </section>
 
-    <!-- ═══ AVIS & TÉMOIGNAGES ═══ -->
+    <!-- ═══ AVIS & TÉMOIGNAGES (SLIDER) ═══ -->
     <section id="reviews" class="reveal">
         <div class="section-header">
             <h2 class="section-title">Avis & <span class="accent">Témoignages</span></h2>
             <div class="title-divider"></div>
         </div>
-        <div class="reviews-grid">
-            <div class="review-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="review-text">« Oui nickel le lissage au top, merci au séchage ils sont tous lisses. »</p>
-                <span class="client-tag">Nano Indien</span>
+        <div class="reviews-slider-container">
+            <button class="slider-arrow prev-arrow" onclick="scrollReviews('left')"><i class="fas fa-chevron-left"></i></button>
+            <div class="reviews-track" id="reviewsTrack">
+                <!-- Avis 1 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Après avoir fait un shampoing et passé un coup de sèche-cheveux, ils sont toujours aussi lisses. Parfait, merci encore ! C'est 10 fois mieux et beaucoup plus simple. »</p>
+                    <span class="client-tag">Lissage au Tanin</span>
+                </div>
+                <!-- Avis 2 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Je te fais un petit retour car j'ai relavé mes cheveux et ils sont toujours aussi lisses. Franchement le résultat est incroyable, c'est le meilleur lissage que j'ai fait dans ma vie ! »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 3 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Mes cheveux sont tellement doux et souples, je suis fan !!! Pour toutes les filles de Lyon et des alentours, foncez chez elle. »</p>
+                    <span class="client-tag">Lissage</span>
+                </div>
+                <!-- Avis 4 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Petit retour après le premier shampoing : un coup de sèche-cheveux et le lissage revient instantanément ! Ce matin j'ai passé le lisseur, ça m'a pris 3 min au lieu de 15 ! C'est incroyable. »</p>
+                    <span class="client-tag">Lissage au Tanin</span>
+                </div>
+                <!-- Avis 5 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Mes cheveux sont incroyablement doux et brillants. Je les trouve plus souples et énormément moins abîmés par les plaques. Je reprends petit à petit la forme de mes boucles. Merci beaucoup 🫶 »</p>
+                    <span class="client-tag">Soin Botox Patine</span>
+                </div>
+                <!-- Avis 6 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Mes cheveux sont tout doux, tout lisses, tout brillants, j'ai mis juste un petit coup de sèche-cheveux. Impeccable 👍❤️ »</p>
+                    <span class="client-tag">Lissage au Tanin</span>
+                </div>
+                <!-- Avis 7 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« J'ai lavé avec le shampoing sans sulfate et posé un masque, et juste avec le sèche-cheveux le résultat est incroyable, pas besoin de plaques. Je te remercie beaucoup et je suis hyper satisfaite. »</p>
+                    <span class="client-tag">Lissage au Tanin</span>
+                </div>
+                <!-- Avis 8 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Le lissage, je l'ai fait en mars, il n'a pas bougé, vraiment incroyable ! Je ne passe plus du tout le lisseur, que le sèche-cheveux. Je ne regrette tellement pas, merci encore pour ton superbe travail ✨ »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 9 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Nickel, le lissage est au top ! Merci, au séchage ils sont tous lisses. »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 10 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« C'est trop canon. Merci beaucoup pour ta disponibilité et ton écoute. J'adore le résultat ! 🫶 »</p>
+                    <span class="client-tag">Soin Botox Amla</span>
+                </div>
+                <!-- Avis 11 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Franchement je suis trop satisfaite, j'ai lavé mes cheveux, juste séchés au sèche-cheveux, le résultat était magnifique. Ça va être un vrai gain de temps pour moi !! Merci. »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 12 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Suite au soin Botox Nigella, mes cheveux sont super brillants et doux, je suis trop contente ! Je pense te recontacter pour en faire encore, mes cheveux revivent ! 😍 »</p>
+                    <span class="client-tag">Soin Botox Nigella</span>
+                </div>
+                <!-- Avis 13 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Premier lavage nickel ! Juste un séchage et mes cheveux sont superbes ! Mille mercis, je n'hésiterai pas à te recommander et à revenir pour des soins. »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 14 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Je suis hyper contente du lissage Tanin, mes cheveux sont super lisses juste avec un coup de sèche-cheveux. C'est top, merci ! ❤️ »</p>
+                    <span class="client-tag">Lissage au Tanin</span>
+                </div>
+                <!-- Avis 15 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Mes cheveux après le premier lavage, avec juste un séchage au séchoir sans lisser ni rien : c'était parfait, merci encore 🫶 »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 16 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Je viens de faire mon premier shampoing après mon lissage. Mes cheveux sont incroyables, ils sont super doux, brillants et tout à fait lisses sans aucune boucle en sortant de la douche. 🤩 »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 17 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Petit retour sur le lissage, ça fera 2 mois dans quelques jours et je suis super contente ! Un coup de sèche-cheveux et mes cheveux sont super lisses et brillants... 🥰 »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 18 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Je vous remercie pour le lissage, j'ai lavé mes cheveux hier et c'est vraiment trop bien. J'ai les cheveux très lisses juste en les séchant, je suis trop contente ! 🫶 »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 19 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Retour après 2 mois de lissage Nano Indien : je suis super ravie ! C'est un gain de temps considérable et toujours autant de brillance, encore merci 🤩 »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
+                <!-- Avis 20 -->
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">« Merci beaucoup pour ce lissage incroyable 🥰 J'ai des cheveux lisses, soyeux et brillants. Je suis trop contente. Merci pour ta douceur et ta patience ! 🫶 »</p>
+                    <span class="client-tag">Nano Indien</span>
+                </div>
             </div>
-            <div class="review-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="review-text">« Un coup de sèche-cheveux et le lissage revient instantanément ! Ce matin j'ai passé le lisseur, ça m'a pris 3 min au lieu de 15 d'habitude ! 😂 Ils ont gardé leur douceur c'est incroyable. »</p>
-                <span class="client-tag">Lissage au Tanin</span>
-            </div>
-            <div class="review-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="review-text">« Mes cheveux sont incroyablement doux et brillants depuis. Je les trouve plus souples et énormément moins abîmés. Je reprends petit à petit la forme de mes boucles. Merci beaucoup 🫶🏽 »</p>
-                <span class="client-tag">Soin Botox Patine</span>
-            </div>
-            <div class="review-card">
-                <div class="stars">⭐⭐⭐⭐⭐</div>
-                <p class="review-text">« Après un shampoing, un coup de sèche-cheveux et ils sont toujours aussi lisses, parfait merci encore c'est 10 fois mieux et beaucoup plus simple ! 😘 »</p>
-                <span class="client-tag">Lissage au Tanin</span>
-            </div>
+            <button class="slider-arrow next-arrow" onclick="scrollReviews('right')"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
@@ -1391,31 +1569,22 @@
             const introVideo = document.getElementById('intro-video');
             
             if (introVideo) {
-                // 1. Détection de l'appareil (téléphone ou ordinateur)
-                const isMobile = window.innerWidth <= 768;
-                
-                // 2. Assignation de la bonne vidéo
-                if (isMobile) {
-                    introVideo.src = "jungle_intro_mobile.mp4"; // Vidéo verticale 9:16
-                } else {
-                    introVideo.src = "jungle_intro_desktop.mp4"; // Vidéo horizontale 16:9
-                }
-
-                // FORCER LA LECTURE (sans le load() qui peut causer un bug d'interruption sur iPhone)
+                // FORCER LA LECTURE : Safari iOS a parfois besoin qu'on lui rappelle de jouer
+                // même si l'attribut autoplay est présent.
                 const playPromise = introVideo.play();
                 
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         // Si le navigateur bloque la vidéo (ex: Mode Économie d'Énergie sur iPhone ou erreur de fichier)
-                        console.log("Lecture automatique bloquée par le téléphone ou fichier introuvable.");
+                        console.log("Lecture automatique bloquée par le téléphone ou fichier introuvable.", error);
                         finishPreloader();
                     });
                 }
 
-                // 3. Quand la vidéo se termine, on enlève le preloader
+                // Quand la vidéo se termine, on enlève le preloader
                 introVideo.addEventListener('ended', finishPreloader);
                 
-                // 4. Sécurité : si la vidéo bug ou ne charge pas, on force la fin après 8 secondes max
+                // Sécurité : si la vidéo bug ou ne charge pas, on force la fin après 8 secondes max
                 introVideo.addEventListener('error', finishPreloader);
                 setTimeout(finishPreloader, 8000); 
             } else {
@@ -1466,6 +1635,19 @@
             const isOpen = el.classList.contains('active');
             document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
             if (!isOpen) el.classList.add('active');
+        }
+
+        // ── SLIDER AVIS ───────────────────────────────────────────
+        function scrollReviews(direction) {
+            const track = document.getElementById('reviewsTrack');
+            // On défile de la largeur de la zone visible moins un petit espace, pour montrer qu'il y a une suite
+            const scrollAmount = track.clientWidth > 800 ? 700 : track.clientWidth * 0.8; 
+            
+            if (direction === 'left') {
+                track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
         }
 
         // ── MOCK AI DIAGNOSTIC ─────────────────────────────────────────
