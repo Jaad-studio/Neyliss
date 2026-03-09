@@ -203,14 +203,13 @@
         /* Image de fond en remplacement de Spline */
         .hero-bg-container {
             position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
-            will-change: transform;
         }
         .hero-bg { 
             width: 100%; 
@@ -219,8 +218,6 @@
             object-position: center; 
             /* Rendu beaucoup plus pétant, style Rio (plus lumineux, plus saturé) */
             filter: contrast(1.1) brightness(0.85) saturate(1.6); 
-            transform: scale(1.05);
-            transition: transform 0.2s ease-out;
         }
         .hero-glow-orb {
             position: absolute;
@@ -853,7 +850,6 @@
             .hero-bg {
                 object-fit: cover; 
                 object-position: center;
-                transform: scale(1);
             }
         }
 
@@ -1048,10 +1044,11 @@
                 <span class="sig-subtitle">Qui sommes-nous ?</span>
                 <h2><span>NEY LISS</span><br>L'Expertise Capillaire</h2>
                 <div class="sig-divider"></div>
-                <p><strong>NEY LISS</strong> est née d’une passion absolue pour l'art capillaire. Parce que vos cheveux sont une véritable signature, ils exigent une expertise d'exception.</p>
-                <p>Nous avons minutieusement sélectionné les <strong>techniques brésiliennes les plus prestigieuses</strong> et les soins haut de gamme les plus performants du marché pour vous garantir un résultat irréprochable.</p>
-                <p>Chaque femme est unique, sa chevelure aussi. C’est pourquoi notre approche est 100% sur-mesure : un diagnostic précis, une écoute attentive et des solutions parfaitement adaptées à vos besoins.</p>
-                <p>Plus qu’un savoir-faire, <strong>NEY LISS</strong> incarne une promesse : allier passion et excellence pour révéler instantanément la beauté de vos cheveux.</p>
+                <p><strong>NEY LISS</strong> est née d’une passion profonde pour le cheveu, pour sa beauté, sa diversité et la confiance qu’il apporte à chaque femme.</p>
+                <p>Au fil des années, nous avons mené un travail constant de recherche afin d’identifier les produits les plus performants et haut de gamme du marché.</p>
+                <p>Nous travaillons avec les techniques brésiliennes les plus reconnues au monde, associées aux technologies les plus avancées du secteur, afin de vous offrir des résultats à la hauteur de vos standards.</p>
+                <p>Notre expertise s’est construite à travers l’étude de tous types de cheveux et des besoins que les femmes rencontrent au quotidien. Chaque femme est unique. Chaque chevelure a son histoire. C’est pourquoi le sur-mesure est au cœur de notre approche.</p>
+                <p>Plus qu’un savoir-faire, <strong>NEY LISS</strong> incarne une vision :<br>Allier passion, excellence et maîtrise pour sublimer la beauté féminine.</p>
             </div>
         </div>
     </section>
@@ -1677,20 +1674,20 @@
         </div>
         <div class="faq-container">
             <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Quelle est la durée d'un lissage ? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer"><br>Selon votre type de cheveu et l'entretien apporté, un lissage au Tanin ou Nano Indien dure entre 4 et 6 mois.</div>
+                <div class="faq-question">Puis-je faire un lissage sur cheveux colorés ou décolorés ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><br>Nos lissages ne sont pas adaptés aux cheveux décolorés. Ils peuvent toutefois être réalisés sur cheveux colorés. Un délai minimum de 15 jours est recommandé entre une coloration et un lissage.</div>
             </div>
             <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Puis-je faire un lissage sur cheveux colorés ? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer"><br>Oui, tout à fait. Cependant, il est conseillé d'attendre environ 15 jours entre une coloration et un lissage.</div>
+                <div class="faq-question">Le lissage fragilise-t-il les cheveux ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><br>Non, lorsqu’il est réalisé avec des produits de qualité et un protocole professionnel adapté, le lissage ne fragilise pas la fibre capillaire. Il permet au contraire de discipliner et de gainer le cheveu. En limitant l’utilisation quotidienne d’appareils chauffants, il contribue également à préserver la qualité du cheveu.</div>
             </div>
             <div class="faq-item" onclick="toggleFaq(this)">
                 <div class="faq-question">Les soins sont-ils compatibles grossesse/allaitement ? <i class="fas fa-chevron-down"></i></div>
                 <div class="faq-answer"><br>Oui, nos produits sont formulés sans formol ni substances nocives. Nous recommandons cependant toujours l'avis de votre médecin.</div>
             </div>
             <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Comment entretenir mon lissage en vacances ? <i class="fas fa-chevron-down"></i></div>
-                <div class="faq-answer"><br>Le chlore et le sel sont les ennemis du lissage. Avant chaque baignade, rincez vos cheveux à l'eau claire et appliquez un protecteur.</div>
+                <div class="faq-question">Comment entretenir mon lissage ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer"><br>Utilisez des shampoings sans sulfates, faites régulièrement des masques hydratants et évitez l’exposition au sel et au chlore.</div>
             </div>
         </div>
     </section>
@@ -1793,16 +1790,6 @@
 
     <!-- ═══ JAVASCRIPT ═══ -->
     <script>
-        // Parallax Effect for Hero Background
-        document.addEventListener('mousemove', (e) => {
-            const bg = document.getElementById('parallax-bg');
-            if(bg && window.scrollY < window.innerHeight) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 20; // max 20px shift
-                const y = (e.clientY / window.innerHeight - 0.5) * 20;
-                bg.style.transform = `translate(${-x}px, ${-y}px)`;
-            }
-        });
-        
         // Advanced Tilt Effect for Cards
         document.querySelectorAll('.card-container').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -1874,8 +1861,14 @@
             const introVideo = document.getElementById('intro-video');
             
             if (introVideo) {
-                // FORCER LA LECTURE : Safari iOS a parfois besoin qu'on lui rappelle de jouer
-                // même si l'attribut autoplay est présent.
+                // 1. On attache les événements AVANT de lancer la vidéo pour ne rien rater
+                introVideo.addEventListener('ended', finishPreloader);
+                introVideo.addEventListener('error', finishPreloader);
+                
+                // 2. Sécurité : on force la fin après 8 secondes max (évite un écran noir infini si la connexion est mauvaise)
+                setTimeout(finishPreloader, 8000); 
+
+                // 3. FORCER LA LECTURE : Safari iOS a parfois besoin qu'on lui rappelle de jouer
                 const playPromise = introVideo.play();
                 
                 if (playPromise !== undefined) {
@@ -1885,13 +1878,6 @@
                         finishPreloader();
                     });
                 }
-
-                // Quand la vidéo se termine, on enlève le preloader
-                introVideo.addEventListener('ended', finishPreloader);
-                
-                // Sécurité : si la vidéo bug ou ne charge pas, on force la fin après 8 secondes max
-                introVideo.addEventListener('error', finishPreloader);
-                setTimeout(finishPreloader, 8000); 
             } else {
                 setTimeout(finishPreloader, 1000);
             }
@@ -1953,16 +1939,34 @@
             if (!input) { errMsg.innerText = 'Veuillez décrire vos cheveux.'; errMsg.style.display = 'block'; return; }
             errMsg.style.display = 'none'; btn.style.display = 'none'; loader.style.display = 'block';
             
-            // Mock API Call
+            // Analyse des mots-clés
             setTimeout(() => {
-                const res = {
-                    serviceName: "Botox Amazonia",
-                    explanation: "D'après votre description, vos cheveux semblent avoir besoin d'une nutrition intense sans perdre leur volume naturel. Le Botox Amazonia réparera la fibre en profondeur tout en apportant une brillance exceptionnelle."
-                };
-                
-                if(input.toLowerCase().includes('lisser') || input.toLowerCase().includes('lisse')) {
+                let res = { serviceName: "", explanation: "" };
+                const text = input.toLowerCase();
+
+                // Logique de recommandation basée sur les mots-clés
+                if (text.includes('racine') || text.includes('repousse')) {
+                    res.serviceName = "Forfait Lissage Racines";
+                    res.explanation = "Puisque vous avez déjà un lissage, nous allons nous concentrer uniquement sur vos repousses. Cela unifiera votre chevelure sans surcharger vos longueurs déjà lisses.";
+                } else if ((text.includes('fin') || text.includes('fragile') || text.includes('décoloré') || text.includes('blond') || text.includes('volume')) && (text.includes('lisse') || text.includes('détendre'))) {
+                    res.serviceName = "Lissage Californien";
+                    res.explanation = "Vos cheveux nécessitent une approche très douce. Le Lissage Californien est parfait pour lisser et réparer les cheveux fins ou fragilisés tout en conservant un beau volume naturel.";
+                } else if (text.includes('frisottis') || text.includes('gonfle') || text.includes('mousseux') || text.includes('miroir')) {
+                    res.serviceName = "Botox Lissant Gloss";
+                    res.explanation = "Pour discipliner vos frisottis et réduire le volume (sans un lissage extrême), le Botox Gloss est idéal. Il détendra la fibre et apportera une brillance miroir exceptionnelle.";
+                } else if (text.includes('abimé') || text.includes('abîmé') || text.includes('sec') || text.includes('casse') || text.includes('mort') || text.includes('réparer')) {
+                    res.serviceName = "Botox Amazonia";
+                    res.explanation = "Vos cheveux ont besoin d'un traitement de choc nutritif. Le Botox Amazonia va réparer la fibre en profondeur, stopper la casse et redonner vie à vos longueurs sans altérer votre nature.";
+                } else if (text.includes('lisse') || text.includes('lisser') || text.includes('frisé') || text.includes('bouclé') || text.includes('crépu') || text.includes('raid')) {
                     res.serviceName = "Lissage Nano Indien";
-                    res.explanation = "Pour obtenir un résultat 100% lisse tout en reconstruisant vos cheveux abîmés, le Lissage Nano Indien est la solution idéale. Il domptera les frisottis même avec l'humidité.";
+                    res.explanation = "Pour un résultat 100% lisse et raide, même sur cheveux très résistants, le Lissage Nano Indien est la solution ultime. Il détendra parfaitement la fibre tout en la reconstruisant.";
+                } else if (text.includes('léger') || text.includes('soie') || text.includes('pousse') || text.includes('naturel') || text.includes('boucle')) {
+                    res.serviceName = "Botox Silk";
+                    res.explanation = "Pour retrouver une chevelure fluide, soyeuse et stimuler la pousse tout en gardant votre nature de cheveux (et vos boucles intactes), le Botox Silk est le soin qu'il vous faut.";
+                } else {
+                    // Recommandation par défaut si aucun mot-clé spécifique n'est détecté
+                    res.serviceName = "Forfait Botox Complet";
+                    res.explanation = "D'après votre description, un diagnostic complet en salon avec notre soin global sur-mesure serait l'idéal pour métamorphoser vos cheveux de la racine aux pointes.";
                 }
 
                 document.getElementById('res-name').innerText = res.serviceName;
