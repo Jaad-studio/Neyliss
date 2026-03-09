@@ -830,7 +830,9 @@
             transform: scale(1.15); 
         }
         
-        .footer-info { color: rgba(237, 245, 236, .28); font-size: .76rem; letter-spacing: 1px; position: relative; z-index: 10; }
+        .footer-info { color: rgba(237, 245, 236, .28); font-size: .76rem; letter-spacing: 1px; position: relative; z-index: 10; line-height: 1.8; }
+        .jaad-link { color: rgba(255, 255, 255, 0.4); text-decoration: none; font-weight: 500; transition: 0.3s; display: inline-block; margin-top: 5px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.7rem; }
+        .jaad-link:hover { color: var(--br-yellow); }
 
         /* ── RESPONSIVE ─────────────────────────────────────────── */
         @media (max-width:980px) {
@@ -1782,7 +1784,10 @@
                 </svg>
             </a>
         </div>
-        <p class="footer-info">&copy; 2026 NEY LISS — Tous droits réservés</p>
+        <p class="footer-info">
+            &copy; 2026 NEY LISS — Tous droits réservés<br>
+            <a href="https://www.jaad.studio" target="_blank" class="jaad-link">Site web by JAAD STUDIO</a>
+        </p>
     </footer>
 
     <!-- ═══ JAVASCRIPT ═══ -->
