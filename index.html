@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEY LISS | L'Excellence du Soin Capillaire</title>
-    <meta name="description" content="NEY LISS — Expert lissage brésilien au Tanin, Nano Indien et soins capillaires haut de gamme à Romans-sur-Isère.">
+    <title>NEY LISS | Expert Lissage Brésilien & Soins Capillaires Premium</title>
+    <meta name="description" content="Confiez vos cheveux à NEY LISS, spécialiste des lissages brésiliens (Tanin, Nano Indien) et soins capillaires haut de gamme à Romans-sur-Isère. Prenez rendez-vous pour une chevelure sublime.">
+    
+    <!-- OpenGraph SEO Tags -->
+    <meta property="og:title" content="NEY LISS | Expert Lissage & Soins Capillaires">
+    <meta property="og:description" content="Découvrez une expérience capillaire d'exception avec NEY LISS à Romans-sur-Isère.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neyliss.fr">
+    <meta property="og:image" content="https://neyliss.fr/logo.jpg">
+    <meta property="og:site_name" content="NEY LISS">
+    
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <meta name="theme-color" content="#051A0A">
     <!-- Module Spline pour la 3D. 
@@ -14,6 +23,33 @@
          
          Pour contourner ce problème, nous allons essayer l'URL publique de Spline (qui utilise un iframe) 
          plutôt que le composant web (spline-viewer) qui est plus capricieux avec les versions. -->
+
+    <!-- Trust SEO / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "NEY LISS",
+      "image": "https://neyliss.fr/logo.jpg",
+      "url": "https://neyliss.fr/",
+      "description": "Expert lissage brésilien au Tanin, Nano Indien et soins capillaires haut de gamme à Romans-sur-Isère.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Romans-sur-Isère",
+        "addressCountry": "FR"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "184"
+      },
+      "priceRange": "$$"
+    }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="logo.jpg" as="image">
 
     <style>
         :root {
